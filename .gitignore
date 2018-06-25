@@ -48,6 +48,9 @@ gen### JetBrains template
 .idea/**/uiDesigner.xml
 .idea/**/dbnavigator.xml
 
+# compiled file
+target/
+
 # Gradle
 .idea/**/gradle.xml
 # CMake
