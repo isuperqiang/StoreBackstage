@@ -49,4 +49,8 @@ public class UserService {
     public boolean isRegistered(String phone) {
         return userMapper.findCountByPhone(phone) > 0;
     }
+
+    public User findUserById(int userId) {
+        return userMapper.findUserById(userId);
+    }
 }

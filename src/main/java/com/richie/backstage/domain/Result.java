@@ -81,7 +81,8 @@ public class Result<T> {
         LOGOUT_FAILED(103, "注销失败"),
         NOT_LOGIN(104, "用户未登录"),
         REGISTER_FAILED(105, "注册失败"),
-        REPEATED_PHONE(106, "手机号已注册");
+        REPEATED_PHONE(106, "手机号已注册"),
+        USER_NOT_EXIST(107, "用户不存在");
 
         private int code;
         private String message;
