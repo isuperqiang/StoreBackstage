@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.richie.backstage.dao.UserMapper">
+
+    <resultMap id="userResult" type="User">
+        <!--property 对应 User 的成员变量，column 对应数据表的列名-->
+        <id property="userId" column="user_id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="lastVisit" column="last_visit"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="phone" column="phone"/>
+    </resultMap>
+
+    <insert id="register">
+        insert into
+        user (password, phone)
+        values (#{password}, #{phone})
+    </insert>
+    <!--多个参数的情况，使用 map，而不是 parameter type-->
+    <select id="login" resultMap="userResult">
+        select user_id
+        from user
+        where phone = #{phone}
+        and password = #{password}
+    </select>
+
+    <update id="updateVisitTime">
+        update user
+        set last_visit = CURRENT_TIMESTAMP
+        where user_id = #{user_id}
+    </update>
+
+    <select id="findUserById" parameterType="int" resultMap="userResult">
+        select username, phone, create_at, last_visit
+        from user
+        where user_id = #{user_id}
+    </select>
+
+    <select id="findCountByPhone" parameterType="String" resultType="int">
+        select count(*)
+        from user
+        where phone = #{phone}
+    </select>
+
+    <select id="findLastUserId" resultType="int">
+        select max(user_id)
+        from user
+    </select>
+
+</mapper>
