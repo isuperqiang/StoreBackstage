@@ -6,35 +6,35 @@ import java.util.Date;
  * @author richie on 2018.06.25
  */
 public class Store {
-    private int id;
+    private int storeId;
     // 名称
     private String name;
     // logo
-    private String logo;
+    private String logo = "";
     // 地址
     private String address;
     // 类目
     private String category;
-    // 创建时间
-    private Date createdTime;
-    // 介绍
-    private String description;
     // 电话
     private String phone;
+    // 创建时间
+    private Date createdAt;
+    // 介绍
+    private String description;
     // 均价
-    private double avgPrice;
+    private String avgPrice = "";
     // 营业时间开始
-    private String saleFrom;
+    private String saleFrom = "";
     // 营业时间结束
-    private String saleTo;
+    private String saleTo = "";
     private User user;
 
-    public int getId() {
-        return id;
+    public int getStoreId() {
+        return storeId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setStoreId(int storeId) {
+        this.storeId = storeId;
     }
 
     public String getName() {
@@ -69,12 +69,12 @@ public class Store {
         this.category = category;
     }
 
-    public Date getCreatedTime() {
-        return createdTime;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     public String getDescription() {
@@ -93,11 +93,11 @@ public class Store {
         this.phone = phone;
     }
 
-    public double getAvgPrice() {
+    public String getAvgPrice() {
         return avgPrice;
     }
 
-    public void setAvgPrice(double avgPrice) {
+    public void setAvgPrice(String avgPrice) {
         this.avgPrice = avgPrice;
     }
 
@@ -128,12 +128,12 @@ public class Store {
     @Override
     public String toString() {
         return "Store{" +
-                "id=" + id +
+                "storeId=" + storeId +
                 ", name='" + name + '\'' +
                 ", logo='" + logo + '\'' +
                 ", address='" + address + '\'' +
                 ", category='" + category + '\'' +
-                ", createdTime=" + createdTime +
+                ", createdAt=" + createdAt +
                 ", description='" + description + '\'' +
                 ", phone='" + phone + '\'' +
                 ", avgPrice=" + avgPrice +

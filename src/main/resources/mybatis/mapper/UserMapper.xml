@@ -32,7 +32,7 @@
     </update>
 
     <select id="findUserById" parameterType="int" resultMap="userResult">
-        select username, phone, create_at, last_visit
+        select username, phone, created_at, last_visit, user_id
         from user
         where user_id = #{user_id}
     </select>

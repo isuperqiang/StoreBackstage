@@ -82,7 +82,11 @@ public class Result<T> {
         NOT_LOGIN(104, "用户未登录"),
         REGISTER_FAILED(105, "注册失败"),
         REPEATED_PHONE(106, "手机号已注册"),
-        USER_NOT_EXIST(107, "用户不存在");
+        USER_NOT_EXIST(107, "用户不存在"),
+
+        CREATE_STORE_FAILED(200, "创建店铺失败"),
+        UPDATE_STORE_FAILED(201, "更新店铺失败"),
+        QUERY_STORE_FAILED(202, "查询不到店铺");
 
         private int code;
         private String message;

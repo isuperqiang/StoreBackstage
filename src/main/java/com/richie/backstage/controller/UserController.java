@@ -7,7 +7,10 @@ import com.richie.backstage.service.UserService;
 import com.richie.backstage.util.ApiUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
@@ -41,7 +44,7 @@ public class UserController {
             httpSession.setAttribute(uuid, user.getUserId());
 
             Cookie cookie = new Cookie(Constant.USER_TOKEN, uuid);
-            cookie.setMaxAge(expiry); //单位 秒
+            cookie.setMaxAge(expiry); // 单位 秒
             cookie.setPath("/");
             response.addCookie(cookie);
             return Result.createYesResult(uuid);
@@ -66,7 +69,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public Result logout(@CookieValue(value = Constant.USER_TOKEN, defaultValue = Constant.NULL_TOKEN) String token,
                          HttpServletRequest request, HttpServletResponse response) {
         HttpSession httpSession = request.getSession(false);
@@ -86,8 +89,8 @@ public class UserController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/query_user", method = RequestMethod.POST)
-    public Result queryUserInfo(@RequestParam("token") String token, HttpServletRequest request) {
+    @PostMapping(value = "/query_user")
+    public Result queryUserInfo(@CookieValue(value = Constant.USER_TOKEN) String token, HttpServletRequest request) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);
         User user = userService.findUserById(userId);
         if (user != null) {

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.richie.backstage.dao.StoreMapper">
+
+    <resultMap id="storeResult" type="Store">
+        <!--property 对应 User 的成员变量，column 对应数据表的列名-->
+        <id property="storeId" column="store_id"/>
+        <result property="logo" column="logo"/>
+        <result property="description" column="description"/>
+        <result property="address" column="address"/>
+        <result property="category" column="category"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="phone" column="phone"/>
+        <result property="avgPrice" column="avg_price"/>
+        <result property="saleFrom" column="sale_from"/>
+        <result property="saleTo" column="sale_to"/>
+        <!--嵌套结果查询-->
+        <!--一对一查询-->
+        <association property="user" column="user_id" javaType="User">
+            <id property="userId" column="user_id"/>
+            <result property="username" column="username"/>
+            <result property="password" column="password"/>
+            <result property="lastVisit" column="last_visit"/>
+            <result property="createdAt" column="created_at"/>
+            <result property="phone" column="phone"/>
+        </association>
+    </resultMap>
+
+    <insert id="createStore">
+        insert into store (name, logo, description, address, phone, avg_price, sale_from, sale_to, category, user_id)
+        values (#{name}, #{logo}, #{description}, #{address}, #{phone}, #{avg_price}, #{sale_from}, #{sale_to}, #{category}, #{user_id})
+    </insert>
+
+    <update id="updateStore">
+        update store set name = #{name}, logo = #{logo}, description = #{description}, address = #{address}, phone = #{phone},
+        avg_price = #{avg_price}, sale_from = #{sale_from}, sale_to = #{sale_to}, category = #{category}
+        where user_id = #{user_id}
+    </update>
+
+    <select id="queryStore" parameterType="int" resultMap="storeResult">
+        select store_id, name, logo, description, created_at, address, phone, avg_price, sale_from, sale_to, category, user_id
+        from store where user_id = #{user_id}
+    </select>
+
+</mapper>
