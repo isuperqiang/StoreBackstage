@@ -1,12 +1,16 @@
 package com.richie.backstage.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author richie on 2018.06.26
  * 商品分类
  */
-public class Category {
+public class Category implements Serializable {
+
+    private static final long serialVersionUID = 2564819842148317353L;
+
     private int catId;
     // 名称
     private String name;
@@ -14,6 +18,7 @@ public class Category {
     private Date createdAt;
     // 排序
     private int sequence;
+    // 店家
     private User user;
 
     public int getCatId() {

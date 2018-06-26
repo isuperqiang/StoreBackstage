@@ -91,7 +91,12 @@ public class Result<T> {
         CREATE_CATEGORY_FAILED(300, "创建分类失败"),
         UPDATE_CATEGORY_FAILED(301, "更新分类失败"),
         DELETE_CATEGORY_FAILED(302, "删除分类失败"),
-        QUERY_CATEGORY_FAILED(304, "查询不到分类");
+        QUERY_CATEGORY_FAILED(304, "查询不到分类"),
+
+        CREATE_GOODS_FAILED(400, "创建商品失败"),
+        UPDATE_GOODS_FAILED(401, "更新商品失败"),
+        DELETE_GOODS_FAILED(402, "删除商品失败"),
+        QUERY_GOODS_FAILED(403, "查询不到商品");
 
         private int code;
         private String message;

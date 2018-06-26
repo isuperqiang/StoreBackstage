@@ -7,10 +7,7 @@ import com.richie.backstage.service.UserService;
 import com.richie.backstage.util.ApiUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
@@ -22,6 +19,7 @@ import javax.servlet.http.HttpSession;
  * @author richie on 2018.06.25
  */
 @Controller
+@RequestMapping("/user")
 public class UserController {
 
     private UserService userService;

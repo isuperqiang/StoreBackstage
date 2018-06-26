@@ -38,8 +38,11 @@
     </update>
 
     <select id="queryStore" parameterType="int" resultMap="storeResult">
-        select store_id, name, logo, description, created_at, address, phone, avg_price, sale_from, sale_to, category, user_id
-        from store where user_id = #{user_id}
+        select s.store_id, s.name, s.logo, s.description, s.created_at, s.address, s.phone, s.avg_price, s.sale_from,
+        s.sale_to, s.category, u.user_id, u.username, u.phone
+        from store s, user u
+        where s.user_id = #{user_id}
+        and s.user_id = u.user_id
     </select>
 
 </mapper>

@@ -1,12 +1,16 @@
 package com.richie.backstage.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @author richie on 2018.06.25
  * 店铺
  */
-public class Store {
+public class Store implements Serializable {
+
+    private static final long serialVersionUID = -5668580332970818722L;
+
     private int storeId;
     // 名称
     private String name;

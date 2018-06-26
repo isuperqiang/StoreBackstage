@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.richie.backstage.dao.GoodsMapper">
+
+    <resultMap id="goodsResult" type="Goods">
+        <!--property 对应 User 的成员变量，column 对应数据表的列名-->
+        <id property="goodsId" column="goods_id"/>
+        <result property="gname" column="gname"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="specification" column="specification"/>
+        <result property="picture" column="picture"/>
+        <result property="price" column="price"/>
+        <result property="stock" column="stock"/>
+        <result property="saleVolume" column="sale_volume"/>
+        <result property="cost" column="cost"/>
+        <result property="onSale" column="on_sale"/>
+        <!--嵌套结果查询-->
+        <!--一对一查询-->
+        <association property="category" column="cat_id" javaType="Category">
+            <id property="catId" column="cat_id"/>
+            <result property="name" column="name"/>
+        </association>
+    </resultMap>
+
+    <insert id="createGoods">
+        insert into goods (gname, picture, specification, price, cost, stock, sale_volume, cat_id, user_id)
+        values (#{name}, #{picture}, #{specification}, #{price}, #{cost}, #{stock}, #{sale_volume}, #{cat_id}, #{user_id})
+    </insert>
+
+    <update id="updateGoods">
+        update goods set gname = #{name}, picture = #{picture}, specification = #{specification}, price = #{price}, cost = #{cost},
+        stock = #{stock}, sale_volume = #{sale_volume}, on_sale = #{on_sale}, cat_id = #{cat_id} where goods_id = #{goods_id}
+    </update>
+
+    <delete id="deleteGoods">
+        delete from goods where goods_id = #{goods_id}
+    </delete>
+
+    <select id="queryGoodsById" parameterType="int" resultMap="goodsResult">
+        select goods_id, gname, picture, price, specification, cost, stock, sale_volume, on_sale, cat_id
+        from goods where goods_id = #{goods_id}
+    </select>
+
+    <select id="queryGoodsByPage" resultMap="goodsResult">
+        select g.goods_id, g.gname, g.picture, g.price, g.specification, g.cost, g.stock, g.sale_volume, g.on_sale,
+        g.cat_id, c.name
+        from goods g, category c
+        where g.user_id = #{user_id}
+        and g.cat_id = c.cat_id
+        limit #{page_size} offset #{page_index}
+    </select>
+</mapper>
