@@ -1,8 +1,8 @@
 package com.richie.backstage.controller;
 
 import com.richie.backstage.config.Constant;
-import com.richie.backstage.domain.Result;
 import com.richie.backstage.domain.User;
+import com.richie.backstage.handler.Result;
 import com.richie.backstage.service.UserService;
 import com.richie.backstage.util.ApiUtils;
 import org.springframework.beans.factory.annotation.Autowired;

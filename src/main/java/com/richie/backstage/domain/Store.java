@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * @author richie on 2018.06.25
+ * 店铺
  */
 public class Store {
     private int storeId;
@@ -27,6 +28,7 @@ public class Store {
     private String saleFrom = "";
     // 营业时间结束
     private String saleTo = "";
+    // 店家
     private User user;
 
     public int getStoreId() {
@@ -138,8 +140,8 @@ public class Store {
                 ", phone='" + phone + '\'' +
                 ", avgPrice=" + avgPrice +
                 ", saleFrom='" + saleFrom + '\'' +
-                ", saleTo='" + saleTo +
-                ", user='" + user +
+                ", saleTo='" + saleTo + '\'' +
+                ", user=" + user +
                 '}';
     }
 }

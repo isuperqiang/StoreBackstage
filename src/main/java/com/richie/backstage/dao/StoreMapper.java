@@ -27,12 +27,13 @@ public interface StoreMapper {
      * @param saleFrom
      * @param saleTo
      * @param userId
+     * @return primary key
      * @throws SQLException
      */
-    void createStore(@Param("name") String name, @Param("logo") String logo, @Param("address") String address,
-                     @Param("category") String category, @Param("description") String description, @Param("phone") String phone,
-                     @Param("avg_price") String avgPrice, @Param("sale_from") String saleFrom, @Param("sale_to") String saleTo,
-                     @Param("user_id") int userId) throws SQLException;
+    int createStore(@Param("name") String name, @Param("logo") String logo, @Param("address") String address,
+                    @Param("category") String category, @Param("description") String description, @Param("phone") String phone,
+                    @Param("avg_price") String avgPrice, @Param("sale_from") String saleFrom, @Param("sale_to") String saleTo,
+                    @Param("user_id") int userId) throws SQLException;
 
     /**
      * 更新店铺
@@ -47,12 +48,13 @@ public interface StoreMapper {
      * @param saleFrom
      * @param saleTo
      * @param userId
+     * @return affected rows
      * @throws SQLException
      */
-    void updateStore(@Param("name") String name, @Param("logo") String logo, @Param("address") String address,
-                     @Param("category") String category, @Param("description") String description, @Param("phone") String phone,
-                     @Param("avg_price") String avgPrice, @Param("sale_from") String saleFrom, @Param("sale_to") String saleTo,
-                     @Param("user_id") int userId) throws SQLException;
+    int updateStore(@Param("name") String name, @Param("logo") String logo, @Param("address") String address,
+                    @Param("category") String category, @Param("description") String description, @Param("phone") String phone,
+                    @Param("avg_price") String avgPrice, @Param("sale_from") String saleFrom, @Param("sale_to") String saleTo,
+                    @Param("user_id") int userId) throws SQLException;
 
     /**
      * 查询店铺

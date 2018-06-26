@@ -30,7 +30,7 @@ public interface UserMapper {
      * @param password
      * @return
      */
-    void register(@Param("phone") String phone, @Param("password") String password) throws SQLException;
+    int register(@Param("phone") String phone, @Param("password") String password) throws SQLException;
 
     /**
      * 检查手机号是否被占用
@@ -52,8 +52,9 @@ public interface UserMapper {
      * 更新登录时间
      *
      * @param userId last
+     * @return affected rows
      */
-    void updateVisitTime(@Param("user_id") int userId) throws SQLException;
+    int updateVisitTime(@Param("user_id") int userId) throws SQLException;
 
     /**
      * 查询最后插入的用户 ID

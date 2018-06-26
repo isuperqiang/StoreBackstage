@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.richie.backstage.dao.CategoryMapper">
+
+    <resultMap id="categoryResult" type="Category">
+        <!--property 对应 User 的成员变量，column 对应数据表的列名-->
+        <id property="catId" column="cat_id"/>
+        <result property="sequence" column="sequence"/>
+        <result property="name" column="name"/>
+        <result property="createdAt" column="created_at"/>
+        <!--嵌套结果查询-->
+        <!--一对一查询-->
+        <!--<association property="user" column="user_id" javaType="User">-->
+        <!--<id property="userId" column="user_id"/>-->
+        <!--<result property="username" column="username"/>-->
+        <!--<result property="password" column="password"/>-->
+        <!--<result property="lastVisit" column="last_visit"/>-->
+        <!--<result property="createdAt" column="created_at"/>-->
+        <!--<result property="phone" column="phone"/>-->
+        <!--</association>-->
+    </resultMap>
+
+    <insert id="createCategory">
+        insert into category (name, sequence, user_id) values (#{name}, #{sequence}, #{user_id})
+    </insert>
+
+    <update id="updateCategory">
+        update category set name = #{name}, sequence = #{sequence} where cat_id = #{cat_id}
+    </update>
+
+    <delete id="deleteCategory" parameterType="int">
+        delete from category where cat_id = #{cat_id}
+    </delete>
+
+    <select id="queryAllCategories" parameterType="int" resultMap="categoryResult">
+        select cat_id, name, created_at, sequence from category order by sequence asc
+    </select>
+
+    <select id="queryMaxSeq" parameterType="int" resultType="Integer">
+        select max(sequence) from category where user_id = #{user_id}
+    </select>
+
+</mapper>

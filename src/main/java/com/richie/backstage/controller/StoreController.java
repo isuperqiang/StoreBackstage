@@ -1,9 +1,9 @@
 package com.richie.backstage.controller;
 
 import com.richie.backstage.config.Constant;
-import com.richie.backstage.domain.Result;
 import com.richie.backstage.domain.Store;
 import com.richie.backstage.domain.User;
+import com.richie.backstage.handler.Result;
 import com.richie.backstage.service.StoreService;
 import com.richie.backstage.service.UserService;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author richie on 2018.06.25
  */
-@Controller()
+@Controller
 @RequestMapping("/store")
 public class StoreController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -37,7 +37,7 @@ public class StoreController {
 
     @ResponseBody
     @PostMapping("/create")
-    public Result createStore(@RequestBody Store store, @CookieValue(value = Constant.USER_TOKEN) String token,
+    public Result createStore(@RequestBody Store store, @CookieValue(Constant.USER_TOKEN) String token,
                               HttpServletRequest request) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);
         logger.info("token:{}, userId:{}", token, userId);
@@ -54,7 +54,7 @@ public class StoreController {
 
     @ResponseBody
     @PostMapping("/update")
-    public Result updateStore(@RequestBody Store store, @CookieValue(value = Constant.USER_TOKEN) String token,
+    public Result updateStore(@RequestBody Store store, @CookieValue(Constant.USER_TOKEN) String token,
                               HttpServletRequest request) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);
         logger.info("token:{}, userId:{}", token, userId);
@@ -69,7 +69,7 @@ public class StoreController {
 
     @ResponseBody
     @PostMapping("/query")
-    public Result queryStory(@CookieValue(value = Constant.USER_TOKEN) String token,
+    public Result queryStory(@CookieValue(Constant.USER_TOKEN) String token,
                              HttpServletRequest request) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);
         logger.info("token:{}, userId:{}", token, userId);

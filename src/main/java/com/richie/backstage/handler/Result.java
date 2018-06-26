@@ -1,4 +1,4 @@
-package com.richie.backstage.domain;
+package com.richie.backstage.handler;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -86,7 +86,12 @@ public class Result<T> {
 
         CREATE_STORE_FAILED(200, "创建店铺失败"),
         UPDATE_STORE_FAILED(201, "更新店铺失败"),
-        QUERY_STORE_FAILED(202, "查询不到店铺");
+        QUERY_STORE_FAILED(202, "查询不到店铺"),
+
+        CREATE_CATEGORY_FAILED(300, "创建分类失败"),
+        UPDATE_CATEGORY_FAILED(301, "更新分类失败"),
+        DELETE_CATEGORY_FAILED(302, "删除分类失败"),
+        QUERY_CATEGORY_FAILED(304, "查询不到分类");
 
         private int code;
         private String message;

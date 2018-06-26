@@ -4,13 +4,19 @@ import java.util.Date;
 
 /**
  * @author richie on 2018.06.25
+ * 商户
  */
 public class User {
     private int userId;
+    // 昵称
     private String username;
+    // 密码
     private String password;
+    // 手机号
     private String phone;
+    // 创建时间
     private Date createdAt;
+    // 上次访问时间
     private Date lastVisit;
 
     public int getUserId() {

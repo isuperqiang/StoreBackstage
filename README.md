@@ -37,4 +37,16 @@ create table `store`(
   CONSTRAINT `store_user` FOREIGN KEY (`user_id_`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8
 
+
+create table `category`(
+  `cat_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL DEFAULT '',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `sequence` int(20) NOT NULL DEFAULT 0,
+  `user_id_` int(11),
+  PRIMARY KEY (`cat_id`),
+  CONSTRAINT `category_user` FOREIGN KEY (`user_id_`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8
+
+
 ```

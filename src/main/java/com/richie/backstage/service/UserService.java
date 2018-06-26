@@ -38,8 +38,8 @@ public class UserService {
 
     public boolean register(String phone, String password) {
         try {
-            userMapper.register(phone, MD5Utils.encode(password));
-            return true;
+            int key = userMapper.register(phone, MD5Utils.encode(password));
+            return key > 0;
         } catch (SQLException e) {
             logger.error("register failed", e);
             return false;
