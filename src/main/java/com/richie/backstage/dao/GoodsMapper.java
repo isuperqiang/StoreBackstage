@@ -75,10 +75,19 @@ public interface GoodsMapper {
     /**
      * 分页查询
      *
+     * @param name
      * @param pageIndex
      * @param pageSize
      * @param userId
      * @return
      */
-    List<Goods> queryGoodsByPage(@Param("page_index") int pageIndex, @Param("page_size") int pageSize, @Param("user_id") int userId);
+    List<Goods> queryGoodsByPage(@Param("name") String name, @Param("page_index") int pageIndex, @Param("page_size") int pageSize, @Param("user_id") int userId);
+
+    /**
+     * 查询商品数量
+     *
+     * @param userId
+     * @return
+     */
+    int queryCount(@Param("user_id") int userId);
 }

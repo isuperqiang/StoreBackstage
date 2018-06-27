@@ -64,7 +64,7 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("/query_cat")
+    @PostMapping("/query")
     public ListResult queryAllCategories(@CookieValue(Constant.USER_TOKEN) String token, @RequestParam(value = "page_index",
             defaultValue = "1") int pageIndex, @RequestParam(value = "page_size", defaultValue = "10") int pageSize,
                                          @RequestParam(value = "name", required = false) String name, HttpServletRequest request) {

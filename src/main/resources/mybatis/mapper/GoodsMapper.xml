@@ -14,6 +14,7 @@
         <result property="saleVolume" column="sale_volume"/>
         <result property="cost" column="cost"/>
         <result property="onSale" column="on_sale"/>
+        <result property="formattedDate" column="formatted_date"/>
         <!--嵌套结果查询-->
         <!--一对一查询-->
         <association property="category" column="cat_id" javaType="Category">
@@ -37,16 +38,22 @@
     </delete>
 
     <select id="queryGoodsById" parameterType="int" resultMap="goodsResult">
-        select goods_id, gname, picture, price, specification, cost, stock, sale_volume, on_sale, cat_id
+        select goods_id, gname, picture, price, specification, cost, stock, sale_volume, on_sale, cat_id, date_format(created_at, '%Y-%m-%d %H:%m') as formatted_date
         from goods where goods_id = #{goods_id}
     </select>
 
     <select id="queryGoodsByPage" resultMap="goodsResult">
         select g.goods_id, g.gname, g.picture, g.price, g.specification, g.cost, g.stock, g.sale_volume, g.on_sale,
-        g.cat_id, c.name
+        g.cat_id, date_format(g.created_at, '%Y-%m-%d %H:%m') as formatted_date, c.name
         from goods g, category c
-        where g.user_id = #{user_id}
+        where g.gname like '%${name}%' and g.user_id = #{user_id}
         and g.cat_id = c.cat_id
         limit #{page_size} offset #{page_index}
+    </select>
+
+    <select id="queryCount" parameterType="int" resultType="int">
+        select count(goods_id)
+        from goods
+        where user_id = #{user_id}
     </select>
 </mapper>

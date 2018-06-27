@@ -71,5 +71,5 @@ public interface CategoryMapper {
      * @param userId
      * @return
      */
-    Integer queryCount(@Param("user_id") int userId);
+    int queryCount(@Param("user_id") int userId);
 }

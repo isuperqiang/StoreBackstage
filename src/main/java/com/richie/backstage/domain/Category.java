@@ -21,6 +21,16 @@ public class Category implements Serializable {
     // 店家
     private User user;
 
+    private String formattedDate;
+
+    public String getFormattedDate() {
+        return formattedDate;
+    }
+
+    public void setFormattedDate(String formattedDate) {
+        this.formattedDate = formattedDate;
+    }
+
     public int getCatId() {
         return catId;
     }

@@ -8,6 +8,7 @@
         <result property="sequence" column="sequence"/>
         <result property="name" column="name"/>
         <result property="createdAt" column="created_at"/>
+        <result property="formattedDate" column="formatted_date"/>
         <!--嵌套结果查询-->
         <!--一对一查询-->
         <!--<association property="user" column="user_id" javaType="User">-->
@@ -33,7 +34,7 @@
     </delete>
 
     <select id="queryCategoryByPage" resultMap="categoryResult">
-        select cat_id, name, created_at, sequence
+        select cat_id, name, created_at, sequence, date_format(created_at, '%Y-%m-%d %H:%m') as formatted_date
         from category
         where name like '%${name}%' and user_id = #{user_id}
         order by sequence desc
@@ -44,7 +45,7 @@
         select max(sequence) from category where user_id = #{user_id}
     </select>
 
-    <select id="queryCount" parameterType="int" resultType="Integer">
+    <select id="queryCount" parameterType="int" resultType="int">
         select count(cat_id)
         from category
         where user_id = #{user_id}

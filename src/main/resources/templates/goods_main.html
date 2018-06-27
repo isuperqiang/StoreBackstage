@@ -38,7 +38,7 @@
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退出</a></li>
+            <li class="layui-nav-item"><a href="javascript:;" onclick="logout()">退出</a></li>
         </ul>
     </div>
 
@@ -77,15 +77,15 @@
             <div class="layui-form-item" style="margin-top: 20px">
                 <label class="layui-form-label">商品名称</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="goods_name" lay-verify="required" autocomplete="off"
+                    <input id="text_input_name" type="text" name="goods_name" lay-verify="required" autocomplete="off"
                            class="layui-input input_box" placeholder="请输入商品名称"/>
                 </div>
                 <div class="layui-input-inline" style="margin-left: 40px">
-                    <button class="layui-btn" onclick="query_goods()">查询</button>
+                    <button id="btn_query" class="layui-btn">查询</button>
                 </div>
 
                 <div class="layui-input-inline" style="margin-left: 20px">
-                    <button class="layui-btn" onclick="add_goods()">添加商品</button>
+                    <button id="btn_add" class="layui-btn">添加商品</button>
                 </div>
             </div>
 
@@ -125,19 +125,17 @@
         var element = layui.element;
 
         element.on('tab(goods_status)', function (data) {
-            layer.msg(data.index + ':' + this.innerHTML);
+            // layer.msg(data.index + ':' + this.innerHTML);
             // index: 0, 1, 2
+            if (data.index == 0) {
 
+            } else if (data.index == 1) {
+
+            } else if (data.index == 2) {
+
+            }
         });
     });
-
-    function add_goods() {
-
-    }
-
-    function query_goods() {
-        layer.msg('查询商品');
-    }
 
     layui.use('table', function () {
         var table = layui.table;
@@ -160,209 +158,86 @@
 
         table.render({
             elem: '#goods'
-            // ,url:'http://www.layui.com/demo/table/user/'
-            ,
-            cellMinWidth: 80
-            ,
-            cols: [
+            , url: '/goods/query'
+            , cellMinWidth: 80
+            , method: 'post'
+            , cols: [
                 [
                     {type: 'checkbox'}
-                    , {field: 'id', title: 'ID', width: 100, unresize: true, sort: true}
-                    , {field: 'username', title: '名称'}
-                    , {field: 'city', title: '规格', width: 200}
-                    , {field: 'wealth', title: '单价', width: 200, sort: true}
-                    , {field: 'wealth', title: '库存', width: 200, sort: true}
-                    , {field: 'wealth', title: '销量', width: 200, sort: true}
-                    , {field: 'wealth', title: '创建时间', width: 200}
+                    , {field: 'goodsId', title: 'ID', width: 100, unresize: true, sort: true}
+                    , {field: 'gname', title: '名称'}
+                    , {field: 'specification', title: '规格', width: 200}
+                    , {field: 'price', title: '单价', width: 200, sort: true}
+                    , {field: 'stock', title: '库存', width: 200, sort: true}
+                    , {field: 'saleVolume', title: '销量', width: 200, sort: true}
+                    , {field: 'formattedDate', title: '创建时间', width: 200}
                     , {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#goods_operation'},
                 ]]
-            ,
-            page: true
-            ,
-            data: [
-                {
-                    'id': 10000,
-                    'username': 'user-0',
-                    'sex': '女',
-                    'city': '城市-0',
-                    'sign': '签名-0',
-                    'experience': 255,
-                    'logins': 24,
-                    'wealth': 82830700,
-                    'classify': '作家',
-                    'score': 57
-                },
-                {
-                    'id': 10001,
-                    'username': 'user-1',
-                    'sex': '男',
-                    'city': '城市-1',
-                    'sign': '签名-1',
-                    'experience': 884,
-                    'logins': 58,
-                    'wealth': 64928690,
-                    'classify': '词人',
-                    'score': 27
-                },
-                {
-                    'id': 10002,
-                    'username': 'user-2',
-                    'sex': '女',
-                    'city': '城市-2',
-                    'sign': '签名-2',
-                    'experience': 650,
-                    'logins': 77,
-                    'wealth': 6298078,
-                    'classify': '酱油',
-                    'score': 31
-                },
-                {
-                    'id': 10003,
-                    'username': 'user-3',
-                    'sex': '女',
-                    'city': '城市-3',
-                    'sign': '签名-3',
-                    'experience': 362,
-                    'logins': 157,
-                    'wealth': 37117017,
-                    'classify': '诗人',
-                    'score': 68
-                },
-                {
-                    'id': 10004,
-                    'username': 'user-4',
-                    'sex': '男',
-                    'city': '城市-4',
-                    'sign': '签名-4',
-                    'experience': 807,
-                    'logins': 51,
-                    'wealth': 76263262,
-                    'classify': '作家',
-                    'score': 6
-                },
-                {
-                    'id': 10005,
-                    'username': 'user-5',
-                    'sex': '女',
-                    'city': '城市-5',
-                    'sign': '签名-5',
-                    'experience': 173,
-                    'logins': 68,
-                    'wealth': 60344147,
-                    'classify': '作家',
-                    'score': 87
-                },
-                {
-                    'id': 10006,
-                    'username': 'user-6',
-                    'sex': '女',
-                    'city': '城市-6',
-                    'sign': '签名-6',
-                    'experience': 982,
-                    'logins': 37,
-                    'wealth': 57768166,
-                    'classify': '作家',
-                    'score': 34
-                },
-                {
-                    'id': 10007,
-                    'username': 'user-7',
-                    'sex': '男',
-                    'city': '城市-7',
-                    'sign': '签名-7',
-                    'experience': 727,
-                    'logins': 150,
-                    'wealth': 82030578,
-                    'classify': '作家',
-                    'score': 28
-                },
-                {
-                    'id': 10008,
-                    'username': 'user-8',
-                    'sex': '男',
-                    'city': '城市-8',
-                    'sign': '签名-8',
-                    'experience': 951,
-                    'logins': 133,
-                    'wealth': 16503371,
-                    'classify': '词人',
-                    'score': 14
-                },
-                {
-                    'id': 10009,
-                    'username': 'user-9',
-                    'sex': '女',
-                    'city': '城市-9',
-                    'sign': '签名-9',
-                    'experience': 484,
-                    'logins': 25,
-                    'wealth': 86801934,
-                    'classify': '词人',
-                    'score': 75
-                },
-                {
-                    'id': 10005,
-                    'username': 'user-5',
-                    'sex': '女',
-                    'city': '城市-5',
-                    'sign': '签名-5',
-                    'experience': 173,
-                    'logins': 68,
-                    'wealth': 60344147,
-                    'classify': '作家',
-                    'score': 87
-                },
-                {
-                    'id': 10006,
-                    'username': 'user-6',
-                    'sex': '女',
-                    'city': '城市-6',
-                    'sign': '签名-6',
-                    'experience': 982,
-                    'logins': 37,
-                    'wealth': 57768166,
-                    'classify': '作家',
-                    'score': 34
-                },
-                {
-                    'id': 10007,
-                    'username': 'user-7',
-                    'sex': '男',
-                    'city': '城市-7',
-                    'sign': '签名-7',
-                    'experience': 727,
-                    'logins': 150,
-                    'wealth': 82030578,
-                    'classify': '作家',
-                    'score': 28
-                },
-                {
-                    'id': 10008,
-                    'username': 'user-8',
-                    'sex': '男',
-                    'city': '城市-8',
-                    'sign': '签名-8',
-                    'experience': 951,
-                    'logins': 133,
-                    'wealth': 16503371,
-                    'classify': '词人',
-                    'score': 14
-                },
-                {
-                    'id': 10009,
-                    'username': 'user-9',
-                    'sex': '女',
-                    'city': '城市-9',
-                    'sign': '签名-9',
-                    'experience': 484,
-                    'logins': 25,
-                    'wealth': 86801934,
-                    'classify': '词人',
-                    'score': 75
-                }]
+            , response: {
+                dataName: 'list',
+                countName: 'count',
+                statusCode: '1',
+                statusName: 'status'
+            }
+            , request: {
+                pageName: 'page_index',
+                limitName: 'page_size'
+            }
+            , page: true
+            , id: 'render_goods'
         });
 
+        // 查询按钮
+        $('#btn_query').on('click', function () {
+            console.log('click query button');
+            var text = $('#text_input_name').val();
+            table.reload('render_goods', {
+                where: {
+                    'name': text
+                }
+                , page: {
+                    curr: 1
+                }
+            });
+        });
+
+        // 添加按钮
+        $('#btn_add').on('click', function () {
+            console.log('click add button');
+            //prompt层
+            layer.prompt({title: '输入分类名称，并确认', formType: 2}, function (text, index) {
+                layer.close(index);
+                layer.msg('您最后写下了：' + text);
+                // refresh
+                var cat = {'name': text};
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+            });
+        });
     });
+
+    function logout() {
+        layer.confirm('确定退出登录？', function (index) {
+            $.ajax({
+                type: "post",
+                url: "/user/logout",
+                async: true, // 异步处理
+                dataType: "json", // 预期的服务器响应的数据类型。
+                data: JSON.stringify('{}'), // 	规定要发送到服务器的数据
+                contentType: 'application/json',
+                success: function (result) {
+                    console.log('logout succeed: ' + result);
+                    if (result.status == 1) {
+                        location.href = '/login.html';
+                    } else {
+                        layer.msg(result.errorCode.message, {icon: 5})
+                    }
+                },
+                error: function () {
+                    layer.msg('请求失败', {icon: 5})
+                }
+            });
+        });
+    }
 </script>
 
 </body>

@@ -122,7 +122,6 @@
                     });
                 });
             } else if (obj.event === 'edit') {
-                // layer.alert('编辑行：<br/>' + JSON.stringify(data));
                 // prompt层
                 layer.prompt({title: '输入分类名称，并确认', formType: 2}, function (text, index) {
                     layer.close(index);
@@ -157,7 +156,7 @@
 
         table.render({
             elem: '#goods'
-            , url: '/category/query_cat'
+            , url: '/category/query'
             , cellMinWidth: 80
             , method: 'post'
             , cols: [
@@ -165,12 +164,11 @@
                     {type: 'checkbox'}
                     , {field: 'catId', title: 'ID', width: 100, unresize: true, sort: true}
                     , {field: 'name', title: '名称'}
-                    , {field: 'createdAt', title: '创建时间', width: 200}
+                    , {field: 'formattedDate', title: '创建时间', width: 200}
                     , {field: 'sequence', title: '序号', width: 200}
                     , {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#goods_operation'},
                 ]]
-            ,
-            response: {
+            , response: {
                 dataName: 'list',
                 countName: 'count',
                 statusCode: '1',
@@ -181,24 +179,24 @@
                 limitName: 'page_size'
             }
             , page: true
-            , id: 'render_goods'
+            , id: 'render_cats'
         });
 
+        // 查询按钮
         $('#btn_query').on('click', function () {
             console.log('click query button');
             var text = $('#text_input_name').val();
-            table.reload('render_goods', {
-                url: '/category/query_cat'
-                , where: {
+            table.reload('render_cats', {
+                where: {
                     'name': text
                 }
                 , page: {
                     curr: 1
                 }
             });
-
         });
 
+        // 添加按钮
         $('#btn_add').on('click', function () {
             console.log('click add button');
             //prompt层
@@ -218,7 +216,7 @@
                         console.log('query succeed: ' + result);
                         if (result.status == 1) {
                             layer.msg('添加成功', {icon: 6});
-                            table.reload('render_goods', {
+                            table.reload('render_cats', {
                                 page: {
                                     curr: 1
                                 }
@@ -248,7 +246,6 @@
                 success: function (result) {
                     console.log('logout succeed: ' + result);
                     if (result.status == 1) {
-                        layer.msg('登出成功', {icon: 6});
                         location.href = '/login.html';
                     } else {
                         layer.msg(result.errorCode.message, {icon: 5})

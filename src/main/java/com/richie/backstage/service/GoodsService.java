@@ -25,7 +25,7 @@ public class GoodsService {
         this.goodsMapper = goodsMapper;
     }
 
-    @CacheEvict(value = "deleteGoods", key = "'goodsPage'")
+    @CacheEvict(value = "deleteGoods", key = "'goods_count'")
     public boolean createGoods(Goods goods, int userId) {
         try {
             int key = goodsMapper.createGoods(goods.getGname(), goods.getPicture(), goods.getSpecification(), goods.getPrice(), goods.getStock(),
@@ -37,7 +37,7 @@ public class GoodsService {
         return false;
     }
 
-    @CacheEvict(value = "deleteGoods", key = "'goodsPage'")
+    @CacheEvict(value = "deleteGoods", key = "'goods_count'")
     public boolean updateGoods(Goods goods) {
         try {
             int affected = goodsMapper.updateGoods(goods.getGname(), goods.getPicture(), goods.getSpecification(), goods.getPrice(), goods.getStock(),
@@ -49,7 +49,7 @@ public class GoodsService {
         return false;
     }
 
-    @CacheEvict(value = "deleteGoods", key = "'goodsPage'")
+    @CacheEvict(value = "deleteGoods", key = "'goods_count'")
     public boolean deleteGoods(int goodsId) {
         try {
             int affected = goodsMapper.deleteGoods(goodsId);
@@ -60,12 +60,20 @@ public class GoodsService {
         return false;
     }
 
-    @Cacheable(value = "goodsByPage", key = "'goodsPage'")
-    public List<Goods> queryGoodsByPage(int pageIndex, int pageSize, int userId) {
+    //@Cacheable(value = "goodsByPage", key = "'goodsPage'")
+    public List<Goods> queryGoodsByPage(int pageIndex, int pageSize, String name, int userId) {
         if (--pageIndex < 0) {
             pageIndex = 0;
         }
-        return goodsMapper.queryGoodsByPage(pageIndex * pageSize, pageSize, userId);
+        if (name == null) {
+            name = "";
+        }
+        return goodsMapper.queryGoodsByPage(name, pageIndex * pageSize, pageSize, userId);
+    }
+
+    @Cacheable(value = "queryCount", key = "'goods_count'")
+    public int queryCount(int userId) {
+        return goodsMapper.queryCount(userId);
     }
 
 }

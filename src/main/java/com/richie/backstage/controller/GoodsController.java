@@ -2,8 +2,10 @@ package com.richie.backstage.controller;
 
 import com.richie.backstage.config.Constant;
 import com.richie.backstage.domain.Goods;
+import com.richie.backstage.handler.ListResult;
 import com.richie.backstage.handler.Result;
 import com.richie.backstage.service.GoodsService;
+import com.richie.backstage.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.WebUtils;
@@ -57,15 +59,22 @@ public class GoodsController {
         }
     }
 
-    @PostMapping("/query_goods")
-    public Result queryGoodsByPage(@RequestParam("page_index") int pageIndex, @RequestParam("page_size") int pageSize,
-                                   @CookieValue(Constant.USER_TOKEN) String token, HttpServletRequest request) {
+    @PostMapping("/query")
+    public ListResult queryGoodsByPage(@RequestParam("page_index") int pageIndex, @RequestParam("page_size") int pageSize,
+                                       @RequestParam(value = "name", required = false) String name,
+                                       @CookieValue(Constant.USER_TOKEN) String token, HttpServletRequest request) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);
-        List<Goods> goods = goodsService.queryGoodsByPage(pageIndex, pageSize, userId);
+        List<Goods> goods = goodsService.queryGoodsByPage(pageIndex, pageSize, name, userId);
         if (goods != null) {
-            return Result.createYesResult(goods);
+            int count;
+            if (StringUtils.isEmpty(name)) {
+                count = goodsService.queryCount(userId);
+            } else {
+                count = goods.size();
+            }
+            return ListResult.createOk(goods, count);
         } else {
-            return Result.createNoResult(Result.ErrorCode.QUERY_GOODS_FAILED);
+            return ListResult.createNo(Result.ErrorCode.QUERY_GOODS_FAILED.getMessage());
         }
     }
 }
