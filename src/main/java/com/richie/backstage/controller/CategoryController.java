@@ -25,6 +25,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    // {"name":"电子产品"}
     @PostMapping("/create")
     public Result createCategory(@CookieValue(Constant.USER_TOKEN) String token, @RequestBody Category category,
                                  HttpServletRequest request) {
@@ -37,6 +38,7 @@ public class CategoryController {
         }
     }
 
+    // {"catId":1, "name":"电子产品"}
     @PostMapping("/update")
     public Result updateCategory(@RequestBody Category category) {
         boolean updated = categoryService.updateCategory(category);

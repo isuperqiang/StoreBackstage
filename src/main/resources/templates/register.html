@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>注册</title>
+    <link rel="stylesheet" th:href="@{/static/res/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/static/css/login.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/static/css/admin.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/static/css/user.css}"/>
+    <script type="text/javascript" th:src="@{/static/res/layui/layui.js}" charset="utf-8"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<body>
+<div class="div_center" style="padding-top: 160px">
+    <h1 class="content_center">文字创作社区</h1>
+
+    <p class="content_center" style="margin-top: 18px; font-size: 14px">一个简单的内容分享平台</p>
+</div>
+
+<div class="div_center" style="margin-top: 20px;width: 300px;">
+    <form id="register_form" class="layui-form" action="" method="post">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input name="email" class="layui-input form_input" value="isuperqiang@gmail.com" type="text"
+                       placeholder="邮箱"
+                       autocomplete="off" required="required" lay-verify="email"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input name="password" class="layui-input form_input" value="123456" type="password" placeholder="密码"
+                       autocomplete="off" required="required" lay-verify="required"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input name="re_password" class="layui-input form_input" value="123456" type="password"
+                       placeholder="确认密码"
+                       autocomplete="off" required="required" lay-verify="required"/>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input name="username" class="layui-input form_input" value="richie" type="text" placeholder="昵称"
+                       autocomplete="off" required="required" lay-verify="required"/>
+            </div>
+        </div>
+        <div class="layui-form-item ">
+            <div class="layui-input-inline ">
+                <button class="layui-btn action_button" lay-submit="" lay-filter="register_form_button">注册</button>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <a href="login.html" class="layadmin-link action_sub_button">已有账号登录</a>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    // 提交表单
+    layui.use(['layer', 'form'], function () {
+        const form = layui.form;
+
+        //监听提交
+        form.on('submit(register_form_button)', function (data) {
+            console.log(JSON.stringify(data.field));//当前容器的全部表单字段，名值对形式：{name: value}
+            if (data.field.password != (data.field.re_password)) {
+                layer.msg('两次输入的密码不一致', {icon: 5});
+                return false;
+            }
+            var varReg = {
+                'email': data.field.email,
+                'username': data.field.username,
+                'password': data.field.password
+            };
+            var jsonReg = JSON.stringify(varReg);
+            console.log('req data:' + jsonReg);
+            $.ajax({
+                type: "post",
+                url: "/blog/user/register",
+                async: true, // 异步处理
+                dataType: "json", // 预期的服务器响应的数据类型。
+                data: jsonReg, // 	规定要发送到服务器的数据
+                contentType: 'application/json',
+                success: function (result) {
+                    console.log('register succeed: ' + result);
+                    if (result.status == 1) {
+                        layer.msg('注册成功', {icon: 6}, function () {
+                            location.href = 'login.html';
+                        });
+                        // setTimeout("location.href='login.html'", 2000);
+                    } else {
+                        layer.msg(result.errorCode.message, {icon: 5})
+                    }
+                },
+                error: function () {
+                    console.log('request error');
+                    layer.msg('请求失败', {icon: 5});
+                }
+            });
+
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    });
+</script>
+
+</body>
+</html>

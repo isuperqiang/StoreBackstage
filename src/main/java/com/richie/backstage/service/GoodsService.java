@@ -5,6 +5,8 @@ import com.richie.backstage.domain.Goods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -23,6 +25,7 @@ public class GoodsService {
         this.goodsMapper = goodsMapper;
     }
 
+    @CacheEvict(value = "deleteGoods", key = "'goodsPage'")
     public boolean createGoods(Goods goods, int userId) {
         try {
             int key = goodsMapper.createGoods(goods.getGname(), goods.getPicture(), goods.getSpecification(), goods.getPrice(), goods.getStock(),
@@ -34,6 +37,7 @@ public class GoodsService {
         return false;
     }
 
+    @CacheEvict(value = "deleteGoods", key = "'goodsPage'")
     public boolean updateGoods(Goods goods) {
         try {
             int affected = goodsMapper.updateGoods(goods.getGname(), goods.getPicture(), goods.getSpecification(), goods.getPrice(), goods.getStock(),
@@ -45,6 +49,7 @@ public class GoodsService {
         return false;
     }
 
+    @CacheEvict(value = "deleteGoods", key = "'goodsPage'")
     public boolean deleteGoods(int goodsId) {
         try {
             int affected = goodsMapper.deleteGoods(goodsId);
@@ -55,6 +60,7 @@ public class GoodsService {
         return false;
     }
 
+    @Cacheable(value = "goodsByPage", key = "'goodsPage'")
     public List<Goods> queryGoodsByPage(int pageIndex, int pageSize, int userId) {
         if (--pageIndex < 0) {
             pageIndex = 0;

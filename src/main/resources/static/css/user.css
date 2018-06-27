@@ -1,0 +1,109 @@
+.div_center {
+    margin: 0 auto;
+}
+
+.content_center {
+    text-align: center;
+}
+
+.action_button {
+    width: 300px;
+    height: 42px;
+}
+
+.form_input {
+    width: 300px;
+    height: 42px;
+}
+
+.action_sub_button {
+    float: right;
+    margin-top: 8px;
+}
+
+.index_body {
+    width: 960px;
+    margin: 0 auto;
+}
+
+.list-author {
+    text-align: center;
+    font-size: 14px;
+    padding: 8px;
+    color: #555;
+}
+
+.list-info {
+    font-size: 12px;
+    margin-left: 8px;
+    color: #999;
+}
+
+.list-title {
+    font-size: 24px;
+    padding: 4px 8px;
+}
+
+.list-summary {
+    font-size: 14px;
+    color: #555;
+    padding: 8px;
+}
+
+.list-div {
+    padding: 8px 8px 0;
+}
+
+.list-a {
+    text-decoration: none;
+}
+
+.list-a:hover {
+    text-decoration: underline;
+}
+
+.detail-author {
+    text-align: center;
+    font-size: 16px;
+    padding: 8px;
+    color: #333;
+}
+
+.detail-title {
+    text-align: center;
+    color: #000;
+}
+
+.detail-content {
+    font-size: 16px;
+    color: #2f2f2f;
+    padding: 8px 0;
+    margin-top: 20px;
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+.detail-info {
+    font-size: 13px;
+    color: #555;
+}
+
+.main_body {
+    padding: 16px;
+}
+
+.input_box {
+    width: 200px;
+}
+
+.nav_title {
+    color: white;
+    text-align: center;
+    line-height: 60px;
+}
+
+.upload-img {
+    width: 92px;
+    height: 92px;
+    margin: 0 10px 10px 0;
+}

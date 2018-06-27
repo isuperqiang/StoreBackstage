@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>商家管理后台</title>
+
+    <link rel="stylesheet" th:href="@{/static/res/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/static/css/user.css}"/>
+    <script type="text/javascript" th:src="@{/static/res/layui/layui.js}" charset="utf-8"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">商家后台管理系统</div>
+        <div class="div_center"><h2 class="nav_title">世纪华联</h2></div>
+
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <!--<ul class="layui-nav layui-layout-left">-->
+        <!--<li class="layui-nav-item"><a href="">控制台</a></li>-->
+        <!--<li class="layui-nav-item"><a href="">商品管理</a></li>-->
+        <!--<li class="layui-nav-item"><a href="">用户</a></li>-->
+        <!--<li class="layui-nav-item">-->
+        <!--<a href="javascript:;">其它系统</a>-->
+        <!--<dl class="layui-nav-child">-->
+        <!--<dd><a href="">邮件管理</a></dd>-->
+        <!--<dd><a href="">消息管理</a></dd>-->
+        <!--<dd><a href="">授权管理</a></dd>-->
+        <!--</dl>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree">
+                <li class="layui-nav-item layui-this layui-nav-itemed" lay-filter="nav_goods_manage">
+                    <a href="goods_main.html">商品管理</a>
+                    <!--<dl class="layui-nav-child">-->
+                    <!--<dd><a href="javascript:;">列表一</a></dd>-->
+                    <!--<dd><a href="javascript:;">列表二</a></dd>-->
+                    <!--<dd><a href="javascript:;">列表三</a></dd>-->
+                    <!--<dd><a href="">超链接</a></dd>-->
+                    <!--</dl>-->
+                </li>
+                <li class="layui-nav-item" lay-filter="nav_category_manage">
+                    <a href="category_main.html">分类管理</a>
+                    <!--<dl class="layui-nav-child">-->
+                    <!--<dd><a href="javascript:;">列表一</a></dd>-->
+                    <!--<dd><a href="javascript:;">列表二</a></dd>-->
+                    <!--<dd><a href="">超链接</a></dd>-->
+                    <!--</dl>-->
+                </li>
+                <li class="layui-nav-item"><a href="store_main.html" lay-filter="nav_store_manage">店铺设置</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" lay-filter="nav_member_manage">会员管理</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body main_body">
+        <!-- 内容主体区域 -->
+        <h1>商品管理</h1>
+        <hr/>
+        <div>
+            <div class="layui-form-item" style="margin-top: 20px">
+                <label class="layui-form-label">商品名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="goods_name" lay-verify="required" autocomplete="off"
+                           class="layui-input input_box"
+                           placeholder="请输入商品名称">
+                </div>
+                <div class="layui-input-inline" style="margin-left: 40px">
+                    <button class="layui-btn" onclick="query_goods()">查询</button>
+                </div>
+
+                <div class="layui-input-inline" style="margin-left: 20px">
+                    <button class="layui-btn" onclick="add_goods()">添加商品</button>
+                </div>
+            </div>
+
+            <div class="layui-tab layui-tab-brief" lay-filter="goods_status">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">全部</li>
+                    <li>在售中</li>
+                    <li>已下架</li>
+                </ul>
+                <div class="layui-tab-content"></div>
+            </div>
+
+            <script type="text/html" id="goods_operation">
+                <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
+
+            <table class="layui-hide" id="goods" lay-filter="goods_list"></table>
+
+        </div>
+
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        <div style="text-align: center">
+            <a href="https://isuperqiang.github.io" target="_blank">© 落英坠露</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use('layer');
+    //JavaScript代码区域
+    layui.use('element', function () {
+        var element = layui.element;
+
+        element.on('tab(goods_status)', function (data) {
+            layer.msg(data.index + ':' + this.innerHTML);
+            // index: 0, 1, 2
+
+        });
+    });
+
+    function add_goods() {
+
+    }
+
+    function query_goods() {
+        layer.msg('查询商品');
+    }
+
+    layui.use('table', function () {
+        var table = layui.table;
+
+        //监听工具条
+        table.on('tool(goods_list)', function (obj) {
+            var data = obj.data;
+            console.log('click:' + data);
+            if (obj.event === 'detail') {
+                layer.msg('ID：' + data.id + ' 的查看操作');
+            } else if (obj.event === 'del') {
+                layer.confirm('确定删除该商品？', function (index) {
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if (obj.event === 'edit') {
+                layer.alert('编辑行：<br>' + JSON.stringify(data));
+            }
+        });
+
+        table.render({
+            elem: '#goods'
+            // ,url:'http://www.layui.com/demo/table/user/'
+            ,
+            cellMinWidth: 80
+            ,
+            cols: [
+                [
+                    {type: 'checkbox'}
+                    , {field: 'id', title: 'ID', width: 100, unresize: true, sort: true}
+                    , {field: 'username', title: '名称'}
+                    , {field: 'city', title: '规格', width: 200}
+                    , {field: 'wealth', title: '单价', width: 200, sort: true}
+                    , {field: 'wealth', title: '库存', width: 200, sort: true}
+                    , {field: 'wealth', title: '销量', width: 200, sort: true}
+                    , {field: 'wealth', title: '创建时间', width: 200}
+                    , {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#goods_operation'},
+                ]]
+            ,
+            page: true
+            ,
+            data: [
+                {
+                    'id': 10000,
+                    'username': 'user-0',
+                    'sex': '女',
+                    'city': '城市-0',
+                    'sign': '签名-0',
+                    'experience': 255,
+                    'logins': 24,
+                    'wealth': 82830700,
+                    'classify': '作家',
+                    'score': 57,
+                },
+                {
+                    'id': 10001,
+                    'username': 'user-1',
+                    'sex': '男',
+                    'city': '城市-1',
+                    'sign': '签名-1',
+                    'experience': 884,
+                    'logins': 58,
+                    'wealth': 64928690,
+                    'classify': '词人',
+                    'score': 27,
+                },
+                {
+                    'id': 10002,
+                    'username': 'user-2',
+                    'sex': '女',
+                    'city': '城市-2',
+                    'sign': '签名-2',
+                    'experience': 650,
+                    'logins': 77,
+                    'wealth': 6298078,
+                    'classify': '酱油',
+                    'score': 31,
+                },
+                {
+                    'id': 10003,
+                    'username': 'user-3',
+                    'sex': '女',
+                    'city': '城市-3',
+                    'sign': '签名-3',
+                    'experience': 362,
+                    'logins': 157,
+                    'wealth': 37117017,
+                    'classify': '诗人',
+                    'score': 68,
+                },
+                {
+                    'id': 10004,
+                    'username': 'user-4',
+                    'sex': '男',
+                    'city': '城市-4',
+                    'sign': '签名-4',
+                    'experience': 807,
+                    'logins': 51,
+                    'wealth': 76263262,
+                    'classify': '作家',
+                    'score': 6,
+                },
+                {
+                    'id': 10005,
+                    'username': 'user-5',
+                    'sex': '女',
+                    'city': '城市-5',
+                    'sign': '签名-5',
+                    'experience': 173,
+                    'logins': 68,
+                    'wealth': 60344147,
+                    'classify': '作家',
+                    'score': 87,
+                },
+                {
+                    'id': 10006,
+                    'username': 'user-6',
+                    'sex': '女',
+                    'city': '城市-6',
+                    'sign': '签名-6',
+                    'experience': 982,
+                    'logins': 37,
+                    'wealth': 57768166,
+                    'classify': '作家',
+                    'score': 34,
+                },
+                {
+                    'id': 10007,
+                    'username': 'user-7',
+                    'sex': '男',
+                    'city': '城市-7',
+                    'sign': '签名-7',
+                    'experience': 727,
+                    'logins': 150,
+                    'wealth': 82030578,
+                    'classify': '作家',
+                    'score': 28,
+                },
+                {
+                    'id': 10008,
+                    'username': 'user-8',
+                    'sex': '男',
+                    'city': '城市-8',
+                    'sign': '签名-8',
+                    'experience': 951,
+                    'logins': 133,
+                    'wealth': 16503371,
+                    'classify': '词人',
+                    'score': 14,
+                },
+                {
+                    'id': 10009,
+                    'username': 'user-9',
+                    'sex': '女',
+                    'city': '城市-9',
+                    'sign': '签名-9',
+                    'experience': 484,
+                    'logins': 25,
+                    'wealth': 86801934,
+                    'classify': '词人',
+                    'score': 75,
+                },
+                {
+                    'id': 10005,
+                    'username': 'user-5',
+                    'sex': '女',
+                    'city': '城市-5',
+                    'sign': '签名-5',
+                    'experience': 173,
+                    'logins': 68,
+                    'wealth': 60344147,
+                    'classify': '作家',
+                    'score': 87,
+                },
+                {
+                    'id': 10006,
+                    'username': 'user-6',
+                    'sex': '女',
+                    'city': '城市-6',
+                    'sign': '签名-6',
+                    'experience': 982,
+                    'logins': 37,
+                    'wealth': 57768166,
+                    'classify': '作家',
+                    'score': 34,
+                },
+                {
+                    'id': 10007,
+                    'username': 'user-7',
+                    'sex': '男',
+                    'city': '城市-7',
+                    'sign': '签名-7',
+                    'experience': 727,
+                    'logins': 150,
+                    'wealth': 82030578,
+                    'classify': '作家',
+                    'score': 28,
+                },
+                {
+                    'id': 10008,
+                    'username': 'user-8',
+                    'sex': '男',
+                    'city': '城市-8',
+                    'sign': '签名-8',
+                    'experience': 951,
+                    'logins': 133,
+                    'wealth': 16503371,
+                    'classify': '词人',
+                    'score': 14,
+                },
+                {
+                    'id': 10009,
+                    'username': 'user-9',
+                    'sex': '女',
+                    'city': '城市-9',
+                    'sign': '签名-9',
+                    'experience': 484,
+                    'logins': 25,
+                    'wealth': 86801934,
+                    'classify': '词人',
+                    'score': 75,
+                }],
+        });
+
+    });
+</script>
+
+</body>
+</html>
+

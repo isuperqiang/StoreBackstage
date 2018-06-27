@@ -29,18 +29,17 @@ public class UserController {
         this.userService = userService;
     }
 
+    // {"phone":"15868825645","password":"123456"}
     @PostMapping("/login")
     @ResponseBody
-    public Result login(@RequestParam("phone") String phone, @RequestParam("password") String password, HttpServletRequest request,
-                        HttpServletResponse response) {
-        User user = userService.login(phone, password);
+    public Result login(@RequestBody User u,
+                        HttpServletResponse response, HttpSession httpSession) {
+        User user = userService.login(u.getPhone(), u.getPassword());
         if (user != null) {
-            HttpSession httpSession = request.getSession();
-            int expiry = 3600 * 24;
             String uuid = ApiUtils.getUUID();
-            httpSession.setMaxInactiveInterval(expiry);
             httpSession.setAttribute(uuid, user.getUserId());
 
+            int expiry = 3600 * 24;
             Cookie cookie = new Cookie(Constant.USER_TOKEN, uuid);
             cookie.setMaxAge(expiry); // 单位 秒
             cookie.setPath("/");
@@ -69,8 +68,7 @@ public class UserController {
     @ResponseBody
     @PostMapping("/logout")
     public Result logout(@CookieValue(value = Constant.USER_TOKEN, defaultValue = Constant.NULL_TOKEN) String token,
-                         HttpServletRequest request, HttpServletResponse response) {
-        HttpSession httpSession = request.getSession(false);
+                         HttpServletRequest request, HttpServletResponse response, HttpSession httpSession) {
         if (httpSession != null) {
             httpSession.removeAttribute(token);
         }

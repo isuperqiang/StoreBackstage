@@ -1,14 +1,15 @@
 package com.richie.backstage.config;
 
 import com.richie.backstage.handler.CustomInterceptor;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * @author richie on 2018.06.25
  */
-@Component
+@Configuration
 public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
@@ -16,6 +17,15 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         super.addInterceptors(registry);
         registry.addInterceptor(new CustomInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login", "/register");
+                .excludePathPatterns("/user/login", "/user/register", "/hello");
     }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        super.addViewControllers(registry);
+        registry.addViewController("/login.html").setViewName("login");
+        registry.addViewController("/register.html").setViewName("register");
+        registry.addViewController("/goods_main.html").setViewName("goods_main");
+    }
+
 }
