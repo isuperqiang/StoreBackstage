@@ -2,8 +2,12 @@ package com.richie.backstage.controller;
 
 import com.richie.backstage.config.Constant;
 import com.richie.backstage.domain.Category;
+import com.richie.backstage.handler.ListResult;
 import com.richie.backstage.handler.Result;
 import com.richie.backstage.service.CategoryService;
+import com.richie.backstage.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.WebUtils;
@@ -18,6 +22,7 @@ import java.util.List;
 @RequestMapping("/category")
 public class CategoryController {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     private CategoryService categoryService;
 
     @Autowired
@@ -50,8 +55,8 @@ public class CategoryController {
     }
 
     @PostMapping("/delete")
-    public Result deleteCategory(@RequestParam("cat_id") int catId) {
-        boolean deleted = categoryService.deleteCategory(catId);
+    public Result deleteCategory(@RequestBody Category category) {
+        boolean deleted = categoryService.deleteCategory(category.getCatId());
         if (deleted) {
             return Result.createYesResult();
         } else {
@@ -59,14 +64,23 @@ public class CategoryController {
         }
     }
 
-    @PostMapping("/query_all")
-    public Result queryAllCategories(@CookieValue(Constant.USER_TOKEN) String token, HttpServletRequest request) {
+    @PostMapping("/query_cat")
+    public ListResult queryAllCategories(@CookieValue(Constant.USER_TOKEN) String token, @RequestParam(value = "page_index",
+            defaultValue = "1") int pageIndex, @RequestParam(value = "page_size", defaultValue = "10") int pageSize,
+                                         @RequestParam(value = "name", required = false) String name, HttpServletRequest request) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);
-        List<Category> categories = categoryService.queryAllCategories(userId);
+        logger.info("pageIndex:{}, pageSize:{}, name:{}", pageIndex, pageSize, name);
+        List<Category> categories = categoryService.queryAllCategories(pageIndex, pageSize, name, userId);
         if (categories != null) {
-            return Result.createYesResult(categories);
+            int count;
+            if (StringUtils.isEmpty(name)) {
+                count = categoryService.queryCount(userId);
+            } else {
+                count = categories.size();
+            }
+            return ListResult.createOk(categories, count);
         } else {
-            return Result.createNoResult(Result.ErrorCode.QUERY_CATEGORY_FAILED);
+            return ListResult.createNo(Result.ErrorCode.QUERY_CATEGORY_FAILED.getMessage());
         }
     }
 }

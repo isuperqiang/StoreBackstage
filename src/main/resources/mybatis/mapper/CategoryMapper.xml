@@ -32,12 +32,22 @@
         delete from category where cat_id = #{cat_id}
     </delete>
 
-    <select id="queryAllCategories" parameterType="int" resultMap="categoryResult">
-        select cat_id, name, created_at, sequence from category order by sequence asc
+    <select id="queryCategoryByPage" resultMap="categoryResult">
+        select cat_id, name, created_at, sequence
+        from category
+        where name like '%${name}%' and user_id = #{user_id}
+        order by sequence desc
+        limit #{page_size} offset #{page_index}
     </select>
 
     <select id="queryMaxSeq" parameterType="int" resultType="Integer">
         select max(sequence) from category where user_id = #{user_id}
+    </select>
+
+    <select id="queryCount" parameterType="int" resultType="Integer">
+        select count(cat_id)
+        from category
+        where user_id = #{user_id}
     </select>
 
 </mapper>

@@ -48,10 +48,14 @@ public interface CategoryMapper {
     /**
      * 查询所有分类
      *
+     * @param name
+     * @param pageIndex
+     * @param pageSize
      * @param userId
      * @return
      */
-    List<Category> queryAllCategories(@Param("user_id") int userId);
+    List<Category> queryCategoryByPage(@Param("name") String name, @Param("page_index") int pageIndex,
+                                       @Param("page_size") int pageSize, @Param("user_id") int userId);
 
     /**
      * 查询最大的序号
@@ -60,4 +64,12 @@ public interface CategoryMapper {
      * @return
      */
     Integer queryMaxSeq(@Param("user_id") int userId);
+
+    /**
+     * 查询数量
+     *
+     * @param userId
+     * @return
+     */
+    Integer queryCount(@Param("user_id") int userId);
 }

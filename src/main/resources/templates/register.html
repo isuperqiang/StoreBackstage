@@ -22,9 +22,9 @@
     <form id="register_form" class="layui-form" action="" method="post">
         <div class="layui-form-item">
             <div class="layui-input-inline">
-                <input name="email" class="layui-input form_input" value="isuperqiang@gmail.com" type="text"
-                       placeholder="邮箱"
-                       autocomplete="off" required="required" lay-verify="email"/>
+                <input name="phone" class="layui-input form_input" value="13809890987" type="text"
+                       placeholder="手机号"
+                       autocomplete="off" required="required" lay-verify="phone"/>
             </div>
         </div>
         <div class="layui-form-item">
@@ -37,12 +37,6 @@
             <div class="layui-input-inline">
                 <input name="re_password" class="layui-input form_input" value="123456" type="password"
                        placeholder="确认密码"
-                       autocomplete="off" required="required" lay-verify="required"/>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-input-inline">
-                <input name="username" class="layui-input form_input" value="richie" type="text" placeholder="昵称"
                        autocomplete="off" required="required" lay-verify="required"/>
             </div>
         </div>
@@ -71,15 +65,14 @@
                 return false;
             }
             var varReg = {
-                'email': data.field.email,
-                'username': data.field.username,
+                'phone': data.field.phone,
                 'password': data.field.password
             };
             var jsonReg = JSON.stringify(varReg);
             console.log('req data:' + jsonReg);
             $.ajax({
                 type: "post",
-                url: "/blog/user/register",
+                url: "/user/register",
                 async: true, // 异步处理
                 dataType: "json", // 预期的服务器响应的数据类型。
                 data: jsonReg, // 	规定要发送到服务器的数据
@@ -90,7 +83,6 @@
                         layer.msg('注册成功', {icon: 6}, function () {
                             location.href = 'login.html';
                         });
-                        // setTimeout("location.href='login.html'", 2000);
                     } else {
                         layer.msg(result.errorCode.message, {icon: 5})
                     }

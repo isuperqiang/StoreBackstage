@@ -57,7 +57,7 @@ public class GoodsController {
         }
     }
 
-    @PostMapping("/query_page")
+    @PostMapping("/query_goods")
     public Result queryGoodsByPage(@RequestParam("page_index") int pageIndex, @RequestParam("page_size") int pageSize,
                                    @CookieValue(Constant.USER_TOKEN) String token, HttpServletRequest request) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);

@@ -52,12 +52,12 @@ public class UserController {
 
     @PostMapping("/register")
     @ResponseBody
-    public Result register(@RequestParam("phone") String phone, @RequestParam("password") String password) {
-        boolean registered = userService.isRegistered(phone);
+    public Result register(@RequestBody User user) {
+        boolean registered = userService.isRegistered(user.getPhone());
         if (registered) {
             return Result.createNoResult(Result.ErrorCode.REPEATED_PHONE);
         } else {
-            if (userService.register(phone, password)) {
+            if (userService.register(user.getPhone(), user.getPassword())) {
                 return Result.createYesResult();
             } else {
                 return Result.createNoResult(Result.ErrorCode.REGISTER_FAILED);

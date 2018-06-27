@@ -25,7 +25,7 @@ public class CategoryService {
         this.categoryMapper = categoryMapper;
     }
 
-    @CacheEvict(value = "deleteCat", key = "'all_categories'")
+    @CacheEvict(value = "deleteCat", key = "'cat_count'")
     public boolean createCategory(String name, int userId) {
         Integer maxSeq = categoryMapper.queryMaxSeq(userId);
         if (maxSeq == null) {
@@ -40,7 +40,7 @@ public class CategoryService {
         return false;
     }
 
-    @CacheEvict(value = "deleteCat", key = "'all_categories'")
+    @CacheEvict(value = "deleteCat", key = "'cat_count'")
     public boolean updateCategory(Category category) {
         try {
             int affected = categoryMapper.updateCategory(category.getName(), category.getSequence(), category.getCatId());
@@ -51,7 +51,7 @@ public class CategoryService {
         return false;
     }
 
-    @CacheEvict(value = "deleteCat", key = "'all_categories'")
+    @CacheEvict(value = "deleteCat", key = "'cat_count'")
     public boolean deleteCategory(int catId) {
         try {
             int affected = categoryMapper.deleteCategory(catId);
@@ -62,8 +62,19 @@ public class CategoryService {
         return false;
     }
 
-    @Cacheable(value = "queryAllCat", key = "'all_categories'")
-    public List<Category> queryAllCategories(int userId) {
-        return categoryMapper.queryAllCategories(userId);
+    //@Cacheable(value = "queryAllCat", key = "'all_categories'")
+    public List<Category> queryAllCategories(int pageIndex, int pageSize, String name, int userId) {
+        if (--pageIndex < 0) {
+            pageIndex = 0;
+        }
+        if (name == null) {
+            name = "";
+        }
+        return categoryMapper.queryCategoryByPage(name, pageIndex * pageSize, pageSize, userId);
+    }
+
+    @Cacheable(value = "queryCount", key = "'cat_count'")
+    public int queryCount(int userId) {
+        return categoryMapper.queryCount(userId);
     }
 }
