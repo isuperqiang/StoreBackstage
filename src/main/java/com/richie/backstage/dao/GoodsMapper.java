@@ -32,13 +32,12 @@ public interface GoodsMapper {
      */
     int createGoods(@Param("name") String name, @Param("picture") String picture, @Param("specification") String specification,
                     @Param("price") double price, @Param("stock") int stock, @Param("sale_volume") int saleVolume,
-                    @Param("cost") double cost, @Param("cat_id") int catId, @Param("user_id") int userId) throws SQLException;
+                    @Param("cost") double cost, @Param("user_id") int userId) throws SQLException;
 
     /**
      * 更新商品
      *
      * @param name
-     * @param picture
      * @param specification
      * @param price
      * @param stock
@@ -50,7 +49,7 @@ public interface GoodsMapper {
      * @return
      * @throws SQLException
      */
-    int updateGoods(@Param("name") String name, @Param("picture") String picture, @Param("specification") String specification,
+    int updateGoods(@Param("name") String name, @Param("specification") String specification,
                     @Param("price") double price, @Param("stock") int stock, @Param("sale_volume") int saleVolume,
                     @Param("cost") double cost, @Param("on_sale") boolean onSale, @Param("cat_id") int catId,
                     @Param("goods_id") int goodsId) throws SQLException;
@@ -90,4 +89,14 @@ public interface GoodsMapper {
      * @return
      */
     int queryCount(@Param("user_id") int userId);
+
+    /**
+     * 更新商品的图片
+     *
+     * @param goodsId
+     * @param picture
+     * @return
+     * @throws SQLException
+     */
+    int updateGoodsImage(@Param("goods_id") int goodsId, @Param("picture") String picture) throws SQLException;
 }

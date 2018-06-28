@@ -22,7 +22,7 @@
                     <dd><a href="">安全设置</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退出</a></li>
+            <li class="layui-nav-item"><a href="javascript:;" onclick="logout()">退出</a></li>
         </ul>
     </div>
 
@@ -240,7 +240,7 @@
         //普通图片上传
         var uploadInst = upload.render({
             elem: '#upload_btn'
-            , url: '/upload/image'
+            , url: '/upload/image_store'
             , method: 'post'
             , accept: 'images'
             , before: function (obj) {
@@ -253,7 +253,6 @@
                 'store_id': $('#hidden_store_id').val()
             }
             , done: function (res) {
-                //如果上传失败
                 if (res.status == 0) {
                     layer.msg('上传失败', {icon: 5});
                 } else {
@@ -271,6 +270,30 @@
             }
         });
     });
+
+    function logout() {
+        layer.confirm('确定退出登录？', function (index) {
+            $.ajax({
+                type: "post",
+                url: "/user/logout",
+                async: true, // 异步处理
+                dataType: "json", // 预期的服务器响应的数据类型。
+                data: JSON.stringify('{}'), // 	规定要发送到服务器的数据
+                contentType: 'application/json',
+                success: function (result) {
+                    console.log('logout succeed: ' + result);
+                    if (result.status == 1) {
+                        location.href = '/login.html';
+                    } else {
+                        layer.msg(result.errorCode.message, {icon: 5})
+                    }
+                },
+                error: function () {
+                    layer.msg('请求失败', {icon: 5})
+                }
+            });
+        });
+    }
 
 </script>
 

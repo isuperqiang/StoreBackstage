@@ -7,7 +7,9 @@ import com.richie.backstage.handler.Result;
 import com.richie.backstage.service.GoodsService;
 import com.richie.backstage.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +18,7 @@ import java.util.List;
 /**
  * @author richie on 2018.06.26
  */
-@RestController
-@RequestMapping("/goods")
+@Controller
 public class GoodsController {
     private GoodsService goodsService;
 
@@ -27,7 +28,8 @@ public class GoodsController {
     }
 
     // {"gname":"water", "picture":"3", "price":3,"specification":"bottle","stock":11,"cost":1,"saleVolume":100,"category":{"catId":1}}
-    @PostMapping("/create")
+    @PostMapping("/goods/create")
+    @ResponseBody
     public Result createGoods(@RequestBody Goods goods, @CookieValue(Constant.USER_TOKEN) String token, HttpServletRequest request) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);
         boolean created = goodsService.createGoods(goods, userId);
@@ -39,7 +41,8 @@ public class GoodsController {
     }
 
     // {"goodsId":2,"gname":"water", "picture":"fjiudald", "price":3,"specification":"bottle","stock":11,"cost":1,"saleVolume":100,"category":{"catId":1}}
-    @PostMapping("/update")
+    @PostMapping("/goods/update")
+    @ResponseBody
     public Result updateGoods(@RequestBody Goods goods) {
         boolean updated = goodsService.updateGoods(goods);
         if (updated) {
@@ -49,7 +52,8 @@ public class GoodsController {
         }
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/goods/delete")
+    @ResponseBody
     public Result deleteGoods(@RequestBody Goods goods) {
         boolean del = goodsService.deleteGoods(goods.getGoodsId());
         if (del) {
@@ -59,7 +63,8 @@ public class GoodsController {
         }
     }
 
-    @PostMapping("/query")
+    @PostMapping("/goods/query")
+    @ResponseBody
     public ListResult queryGoodsByPage(@RequestParam("page_index") int pageIndex, @RequestParam("page_size") int pageSize,
                                        @RequestParam(value = "name", required = false) String name,
                                        @CookieValue(Constant.USER_TOKEN) String token, HttpServletRequest request) {
@@ -77,4 +82,28 @@ public class GoodsController {
             return ListResult.createNo(Result.ErrorCode.QUERY_GOODS_FAILED.getMessage());
         }
     }
+
+    @GetMapping("/goods_show")
+    public ModelAndView showGoods(@RequestParam("goods_id") int goodsId) {
+        Goods goods = goodsService.queryGoodsById(goodsId);
+        ModelAndView modelAndView = new ModelAndView("goods_show");
+        modelAndView.addObject("goods", goods);
+        return modelAndView;
+    }
+
+    @GetMapping("/goods_edit")
+    public ModelAndView editGoods(@RequestParam(value = "goods_id") int goodsId) {
+        ModelAndView modelAndView = new ModelAndView("goods_edit");
+        Goods goods = goodsService.queryGoodsById(goodsId);
+        modelAndView.addObject("goods", goods);
+        return modelAndView;
+    }
+
+    @GetMapping("/goods_create")
+    public ModelAndView createGoods() {
+        ModelAndView modelAndView = new ModelAndView("goods_edit");
+        modelAndView.addObject(new Goods());
+        return modelAndView;
+    }
+
 }

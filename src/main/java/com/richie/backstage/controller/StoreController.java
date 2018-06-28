@@ -93,8 +93,8 @@ public class StoreController {
         return getStoreMv(token, request, "store_edit");
     }
 
-    private ModelAndView getStoreMv(@CookieValue(Constant.USER_TOKEN) String token, HttpServletRequest request, String store_main) {
-        ModelAndView modelAndView = new ModelAndView(store_main);
+    private ModelAndView getStoreMv(String token, HttpServletRequest request, String viewName) {
+        ModelAndView modelAndView = new ModelAndView(viewName);
         int userId = (int) WebUtils.getSessionAttribute(request, token);
         logger.info("token:{}, userId:{}", token, userId);
         Store store = storeService.queryStore(userId);

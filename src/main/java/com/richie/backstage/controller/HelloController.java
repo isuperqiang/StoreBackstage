@@ -16,29 +16,29 @@ public class HelloController {
         return "hello, world";
     }
 
-    @GetMapping(value = "/login.html")
+    @GetMapping("/login.html")
     public String loginPage() {
         return "login";
     }
 
-    @GetMapping(value = "/register.html")
+    @GetMapping("/register.html")
     public String registerPage() {
         return "register";
     }
 
-    @GetMapping(value = "/goods_main.html")
+    @GetMapping("/goods_main.html")
     public String goodsMain() {
         return "goods_main";
     }
 
-    @GetMapping(value = "/goods_edit.html")
-    public String goodsEdit() {
-        return "goods_edit";
-    }
-
-    @GetMapping(value = "/category_main.html")
+    @GetMapping("/category_main.html")
     public String categoryMain() {
         return "category_main";
+    }
+
+    @GetMapping("/goods_edit.html")
+    public String createGoods() {
+        return "goods_edit";
     }
 
 }

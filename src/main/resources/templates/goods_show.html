@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>商家管理后台</title>
+    <link rel="stylesheet" th:href="@{/static/res/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/static/css/user.css}"/>
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">商家后台管理系统</div>
+        <div class="div_center"><h2 class="nav_title">世纪华联</h2></div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="javascript:;" onclick="logout()">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree">
+                <li class="layui-nav-item" lay-filter="nav_goods_manage">
+                    <a href="goods_main.html">商品管理</a>
+                </li>
+                <li class="layui-nav-item" lay-filter="nav_category_manage">
+                    <a href="category_main.html">分类管理</a>
+                </li>
+                <li class="layui-nav-item layui-this layui-nav-itemed">
+                    <a href="store_edit.html" lay-filter="nav_store_manage">店铺设置</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" lay-filter="nav_member_manage">会员管理</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body main_body">
+        <!-- 内容主体区域 -->
+        <a href="goods_main.html">
+            <i class="layui-icon" style="font-size: 24px">&#xe65c;</i>
+        </a>
+
+        <hr/>
+
+        <h1>商品信息</h1>
+        <hr/>
+
+        <div>
+            <div class="layui-form-item" style="margin-top: 20px">
+                <label class="layui-form-label">图片</label>
+                <img class="upload-img" id="store_img" src="../static/img/user_profile.png" th:src="${goods.picture}"/>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">名称</label>
+                <label class="layui-form-label show-info" th:text="${goods.gname}">好利来蛋糕</label>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">单价</label>
+                <label class="layui-form-label show-info" th:text="${goods.price}">10.00</label>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">成本价</label>
+                <label class="layui-form-label show-info" th:text="${goods.cost}">8.00</label>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">规格</label>
+                <label class="layui-form-label show-info" th:text="${goods.specification}">个</label>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">库存</label>
+                <label class="layui-form-label show-info" th:text="${goods.stock}">2000</label>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">销量</label>
+                    <label class="layui-form-label show-info" th:text="${goods.saleVolume}">100</label>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">分类</label>
+                <label class="layui-form-label show-info" th:text="${goods.category.name}">甜点</label>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        <div style="text-align: center">
+            <a href="https://isuperqiang.github.io" target="_blank">© 落英坠露</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function logout() {
+        layer.confirm('确定退出登录？', function (index) {
+            $.ajax({
+                type: "post",
+                url: "/user/logout",
+                async: true, // 异步处理
+                dataType: "json", // 预期的服务器响应的数据类型。
+                data: JSON.stringify('{}'), // 	规定要发送到服务器的数据
+                contentType: 'application/json',
+                success: function (result) {
+                    console.log('logout succeed: ' + result);
+                    if (result.status == 1) {
+                        location.href = '/login.html';
+                    } else {
+                        layer.msg(result.errorCode.message, {icon: 5})
+                    }
+                },
+                error: function () {
+                    layer.msg('请求失败', {icon: 5})
+                }
+            });
+        });
+    }
+</script>
+</body>
+</html>
+

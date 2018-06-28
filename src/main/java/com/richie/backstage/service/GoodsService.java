@@ -29,7 +29,7 @@ public class GoodsService {
     public boolean createGoods(Goods goods, int userId) {
         try {
             int key = goodsMapper.createGoods(goods.getGname(), goods.getPicture(), goods.getSpecification(), goods.getPrice(), goods.getStock(),
-                    goods.getSaleVolume(), goods.getCost(), goods.getCategory().getCatId(), userId);
+                    goods.getSaleVolume(), goods.getCost(), userId);
             return key > 0;
         } catch (SQLException e) {
             logger.error("create goods failed", e);
@@ -40,7 +40,7 @@ public class GoodsService {
     @CacheEvict(value = "deleteGoods", key = "'goods_count'")
     public boolean updateGoods(Goods goods) {
         try {
-            int affected = goodsMapper.updateGoods(goods.getGname(), goods.getPicture(), goods.getSpecification(), goods.getPrice(), goods.getStock(),
+            int affected = goodsMapper.updateGoods(goods.getGname(), goods.getSpecification(), goods.getPrice(), goods.getStock(),
                     goods.getSaleVolume(), goods.getCost(), goods.isOnSale(), goods.getCategory().getCatId(), goods.getGoodsId());
             return affected > 0;
         } catch (SQLException e) {
@@ -76,4 +76,17 @@ public class GoodsService {
         return goodsMapper.queryCount(userId);
     }
 
+    public Goods queryGoodsById(int goodsId) {
+        return goodsMapper.queryGoodsById(goodsId);
+    }
+
+    public boolean updateGoodsPicture(int goodsId, String picture) {
+        try {
+            int affected = goodsMapper.updateGoodsImage(goodsId, picture);
+            return affected > 0;
+        } catch (SQLException e) {
+            logger.error("update goods failed", e);
+        }
+        return false;
+    }
 }
