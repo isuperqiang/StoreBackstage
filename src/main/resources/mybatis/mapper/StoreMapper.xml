@@ -5,6 +5,7 @@
     <resultMap id="storeResult" type="Store">
         <!--property 对应 User 的成员变量，column 对应数据表的列名-->
         <id property="storeId" column="store_id"/>
+        <result property="name" column="name"/>
         <result property="logo" column="logo"/>
         <result property="description" column="description"/>
         <result property="address" column="address"/>
@@ -32,9 +33,14 @@
     </insert>
 
     <update id="updateStore">
-        update store set name = #{name}, logo = #{logo}, description = #{description}, address = #{address}, phone = #{phone},
+        update store set name = #{name}, description = #{description}, address = #{address}, phone = #{phone},
         avg_price = #{avg_price}, sale_from = #{sale_from}, sale_to = #{sale_to}, category = #{category}
         where user_id = #{user_id}
+    </update>
+
+    <update id="updateStoreLogo">
+        update store set logo = #{logo}
+        where store_id = #{store_id}
     </update>
 
     <select id="queryStore" parameterType="int" resultMap="storeResult">

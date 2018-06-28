@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author richie on 2018.06.25
  */
 @Controller
-@RequestMapping("/store")
 public class StoreController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private StoreService storeService;
@@ -53,7 +53,7 @@ public class StoreController {
     }
 
     @ResponseBody
-    @PostMapping("/update")
+    @PostMapping("/store/update")
     public Result updateStore(@RequestBody Store store, @CookieValue(Constant.USER_TOKEN) String token,
                               HttpServletRequest request) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);
@@ -68,7 +68,7 @@ public class StoreController {
     }
 
     @ResponseBody
-    @PostMapping("/query")
+    @PostMapping("/store/query")
     public Result queryStory(@CookieValue(Constant.USER_TOKEN) String token,
                              HttpServletRequest request) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);
@@ -80,4 +80,26 @@ public class StoreController {
             return Result.createNoResult(Result.ErrorCode.QUERY_STORE_FAILED);
         }
     }
+
+    @GetMapping(value = "/store_main.html")
+    public ModelAndView storeMain(@CookieValue(Constant.USER_TOKEN) String token,
+                                  HttpServletRequest request) {
+        return getStoreMv(token, request, "store_main");
+    }
+
+    @GetMapping(value = "/store_edit.html")
+    public ModelAndView storeEdit(@CookieValue(Constant.USER_TOKEN) String token,
+                                  HttpServletRequest request) {
+        return getStoreMv(token, request, "store_edit");
+    }
+
+    private ModelAndView getStoreMv(@CookieValue(Constant.USER_TOKEN) String token, HttpServletRequest request, String store_main) {
+        ModelAndView modelAndView = new ModelAndView(store_main);
+        int userId = (int) WebUtils.getSessionAttribute(request, token);
+        logger.info("token:{}, userId:{}", token, userId);
+        Store store = storeService.queryStore(userId);
+        modelAndView.addObject("store", store);
+        return modelAndView;
+    }
+
 }

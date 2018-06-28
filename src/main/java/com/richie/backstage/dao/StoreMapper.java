@@ -39,7 +39,6 @@ public interface StoreMapper {
      * 更新店铺
      *
      * @param name
-     * @param logo
      * @param address
      * @param category
      * @param description
@@ -51,10 +50,9 @@ public interface StoreMapper {
      * @return affected rows
      * @throws SQLException
      */
-    int updateStore(@Param("name") String name, @Param("logo") String logo, @Param("address") String address,
-                    @Param("category") String category, @Param("description") String description, @Param("phone") String phone,
-                    @Param("avg_price") String avgPrice, @Param("sale_from") String saleFrom, @Param("sale_to") String saleTo,
-                    @Param("user_id") int userId) throws SQLException;
+    int updateStore(@Param("name") String name, @Param("address") String address, @Param("category") String category,
+                    @Param("description") String description, @Param("phone") String phone, @Param("avg_price") String avgPrice,
+                    @Param("sale_from") String saleFrom, @Param("sale_to") String saleTo, @Param("user_id") int userId) throws SQLException;
 
     /**
      * 查询店铺
@@ -63,4 +61,14 @@ public interface StoreMapper {
      * @return store
      */
     Store queryStore(@Param("user_id") int userId);
+
+    /**
+     * 更新店铺的 logo
+     *
+     * @param storeId
+     * @param logo
+     * @return
+     * @throws SQLException
+     */
+    int updateStoreLogo(@Param("store_id") int storeId, @Param("logo") String logo) throws SQLException;
 }

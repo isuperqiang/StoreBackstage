@@ -107,3 +107,8 @@
     height: 92px;
     margin: 0 10px 10px 0;
 }
+
+.show-info {
+    width: 400px;
+    text-align: left;
+}

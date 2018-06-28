@@ -107,7 +107,7 @@
                         data: JSON.stringify(d), // 	规定要发送到服务器的数据
                         contentType: 'application/json',
                         success: function (result) {
-                            console.log('query succeed: ' + result);
+                            console.log('delete succeed: ' + result);
                             if (result.status == 1) {
                                 layer.msg('删除成功', {icon: 6});
                                 obj.del();
@@ -136,7 +136,7 @@
                         data: JSON.stringify(cat), // 	规定要发送到服务器的数据
                         contentType: 'application/json',
                         success: function (result) {
-                            console.log('query succeed: ' + result);
+                            console.log('edit succeed: ' + result);
                             if (result.status == 1) {
                                 layer.msg('修改成功', {icon: 6});
                                 obj.update({

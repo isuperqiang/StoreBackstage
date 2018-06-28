@@ -31,14 +31,14 @@ public class HelloController {
         return "goods_main";
     }
 
+    @GetMapping(value = "/goods_edit.html")
+    public String goodsEdit() {
+        return "goods_edit";
+    }
+
     @GetMapping(value = "/category_main.html")
     public String categoryMain() {
         return "category_main";
-    }
-
-    @GetMapping(value = "/store_main.html")
-    public String storeMain() {
-        return "store_main";
     }
 
 }

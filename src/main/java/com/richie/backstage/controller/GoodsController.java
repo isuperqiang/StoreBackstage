@@ -50,8 +50,8 @@ public class GoodsController {
     }
 
     @PostMapping("/delete")
-    public Result deleteGoods(@RequestParam("goods_id") int goodsId) {
-        boolean del = goodsService.deleteGoods(goodsId);
+    public Result deleteGoods(@RequestBody Goods goods) {
+        boolean del = goodsService.deleteGoods(goods.getGoodsId());
         if (del) {
             return Result.createYesResult();
         } else {

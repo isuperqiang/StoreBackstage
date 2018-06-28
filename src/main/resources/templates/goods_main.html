@@ -145,11 +145,31 @@
             var data = obj.data;
             console.log('click:' + data);
             if (obj.event === 'detail') {
-                layer.msg('ID：' + data.id + ' 的查看操作');
+                layer.msg('ID：' + data.goodsId + ' 的查看操作');
             } else if (obj.event === 'del') {
+                var d = {'goodsId': data.goodsId};
                 layer.confirm('确定删除该商品？', function (index) {
-                    obj.del();
-                    layer.close(index);
+                    $.ajax({
+                        type: "post",
+                        url: "/goods/delete",
+                        async: true, // 异步处理
+                        dataType: "json", // 预期的服务器响应的数据类型。
+                        data: JSON.stringify(d), // 	规定要发送到服务器的数据
+                        contentType: 'application/json',
+                        success: function (result) {
+                            console.log('delete succeed: ' + result);
+                            if (result.status == 1) {
+                                layer.msg('删除成功', {icon: 6});
+                                obj.del();
+                                layer.close(index);
+                            } else {
+                                layer.msg(result.errorCode.message, {icon: 5})
+                            }
+                        },
+                        error: function () {
+                            layer.msg('请求失败', {icon: 5})
+                        }
+                    });
                 });
             } else if (obj.event === 'edit') {
                 layer.alert('编辑行：<br/>' + JSON.stringify(data));

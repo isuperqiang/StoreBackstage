@@ -96,7 +96,10 @@ public class Result<T> {
         CREATE_GOODS_FAILED(400, "创建商品失败"),
         UPDATE_GOODS_FAILED(401, "更新商品失败"),
         DELETE_GOODS_FAILED(402, "删除商品失败"),
-        QUERY_GOODS_FAILED(403, "查询不到商品");
+        QUERY_GOODS_FAILED(403, "查询不到商品"),
+
+        UPLOAD_IMAGE_FAILED(500, "文件上传失败"),
+        UPLOAD_IMAGE_EMPTY(501, "文件不能为空");
 
         private int code;
         private String message;
