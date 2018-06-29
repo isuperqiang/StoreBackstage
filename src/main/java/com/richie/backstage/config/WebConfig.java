@@ -37,6 +37,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/goods_main.html").setViewName("goods_main");
         registry.addViewController("/category_main.html").setViewName("category_main");
         registry.addViewController("/goods_edit.html").setViewName("goods_edit");
+        registry.addViewController("/goods_new.html").setViewName("goods_new");
         registry.addViewController("/member_main.html").setViewName("member_main");
     }
 

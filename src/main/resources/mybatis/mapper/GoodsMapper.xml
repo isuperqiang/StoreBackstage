@@ -23,8 +23,8 @@
     </resultMap>
 
     <insert id="createGoods">
-        insert into goods (gname, picture, specification, price, cost, stock, sale_volume, user_id)
-        values (#{name}, #{picture}, #{specification}, #{price}, #{cost}, #{stock}, #{sale_volume}, #{user_id})
+        insert into goods (gname, specification, price, cost, stock, sale_volume, user_id)
+        values (#{name}, #{specification}, #{price}, #{cost}, #{stock}, #{sale_volume}, #{user_id})
     </insert>
 
     <update id="updateGoods">

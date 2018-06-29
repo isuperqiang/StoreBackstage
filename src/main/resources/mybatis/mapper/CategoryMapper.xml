@@ -50,4 +50,9 @@
         where user_id = #{user_id}
     </select>
 
+    <select id="queryCatIdByName" parameterType="String" resultType="Integer">
+        select cat_id from category
+        where name = #{name}
+    </select>
+
 </mapper>

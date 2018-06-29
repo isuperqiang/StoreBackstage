@@ -15,7 +15,7 @@
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo">商家后台管理系统</div>
-        <div class="div_center"><h2 class="nav_title" th:text="${store.name}">世纪华联</h2></div>
+        <div class="div_center"><h2 class="nav_title">世纪华联</h2></div>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <dl class="layui-nav-child">
@@ -31,7 +31,7 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree">
-                <li class="layui-nav-item">
+                <li class="layui-nav-item layui-this layui-nav-itemed">
                     <a href="goods_main.html">商品管理</a>
                 </li>
                 <li class="layui-nav-item">
@@ -40,124 +40,97 @@
                 <li class="layui-nav-item">
                     <a href="member_main.html">会员管理</a>
                 </li>
-                <li class="layui-nav-item layui-this layui-nav-itemed">
-                    <a href="store_main.html">店铺设置</a>
+                <li class="layui-nav-item">
+                    <a href="store_edit.html">店铺设置</a>
                 </li>
             </ul>
         </div>
     </div>
 
     <div class="layui-body main_body">
-        <a href="store_main.html">
+        <a href="goods_main.html">
             <i class="layui-icon" style="font-size: 24px">&#xe65c;</i>
         </a>
 
         <hr/>
         <!-- 内容主体区域 -->
-        <h1>店铺设置</h1>
+        <h1>商品创建</h1>
         <hr/>
         <div>
             <form class="layui-form" action="">
                 <div class="layui-form-item" style="margin-top: 20px">
-                    <label class="layui-form-label">店铺 Logo</label>
+                    <label class="layui-form-label">图片</label>
                     <div class="layui-upload">
                         <button type="button" class="layui-btn" id="upload_btn">上传图片</button>
                         <div class="layui-upload-list" style="margin-left: 110px">
-                            <img class="upload-img" id="upload_img" src="../static/img/user_profile.png"
-                                 th:src="${store.logo}"/>
+                            <img class="upload-img" id="upload_img" src="../static/img/user_profile.png"/>
                             <p id="upload_message"></p>
                         </div>
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <label class="layui-form-label">店铺名称</label>
+                    <label class="layui-form-label">名称</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="name" lay-verify="required" autocomplete="off"
-                               class="layui-input input_box" th:value="${store.name}"/>
+                        <input type="text" name="gname" lay-verify="required" autocomplete="off"
+                               class="layui-input input_box"/>
                     </div>
                     <div class="layui-input-inline">
-                        <input id="hidden_store_id" type="hidden" name="storeId" th:value="${store.storeId}"/>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">联系电话</label>
-                    <div class="layui-input-inline">
-                        <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off"
-                               class="layui-input input_box" th:value="${store.phone}"/>
+                        <input id="hidden_goods_id" type="hidden" name="goodsId"/>
                     </div>
                 </div>
 
                 <div class="layui-form-item">
-                    <label class="layui-form-label">人均价格</label>
+                    <label class="layui-form-label">单价</label>
                     <div class="layui-input-inline">
-                        <input type="number" name="avgPrice" lay-verify="required" autocomplete="off"
-                               class="layui-input input_box" placeholder="¥" th:value="${store.avgPrice}"/>
+                        <input type="number" name="price" lay-verify="required" autocomplete="off"
+                               class="layui-input input_box" placeholder="¥"/>
                     </div>
                     <label class="layui-form-label" style="padding-left: 12px; text-align: left">元</label>
                 </div>
 
-                <div class="layui-form-item" style="margin-top: 20px">
-                    <label class="layui-form-label">类目</label>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">成本价</label>
                     <div class="layui-input-inline">
-                        <input type="value" name="category" lay-verify="required" autocomplete="off"
-                               class="layui-input input_box" th:value="${store.category}"/>
+                        <input type="number" name="cost" lay-verify="required" autocomplete="off"
+                               class="layui-input input_box" placeholder="¥"/>
+                    </div>
+                    <label class="layui-form-label" style="padding-left: 12px; text-align: left">元</label>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">规格</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="specification" lay-verify="required" autocomplete="off"
+                               class="layui-input input_box"/>
                     </div>
                 </div>
 
                 <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">营业时间</label>
-                        <div class="layui-input-inline" style="width: 100px;">
-                            <input id="sale_from" type="text" name="saleFrom" placeholder="00:00" autocomplete="off"
-                                   class="layui-input" th:value="${store.saleFrom}"/>
-                        </div>
-                        <div class="layui-form-mid">-</div>
-                        <div class="layui-input-inline" style="width: 100px;">
-                            <input id="sale_to" type="text" name="saleTo" placeholder="00:00" autocomplete="off"
-                                   class="layui-input" th:value="${store.saleTo}"/>
-                        </div>
+                    <label class="layui-form-label">库存</label>
+                    <div class="layui-input-inline">
+                        <input type="number" name="stock" lay-verify="required" autocomplete="off"
+                               class="layui-input input_box"/>
                     </div>
                 </div>
 
                 <div class="layui-form-item">
-                    <label class="layui-form-label">地址</label>
-                    <!--<div class="layui-input-inline">-->
-                    <!--<select name="quiz1">-->
-                    <!--<option value="">请选择省</option>-->
-                    <!--<option value="浙江" selected="">浙江省</option>-->
-                    <!--<option value="你的工号">江西省</option>-->
-                    <!--<option value="你最喜欢的老师">福建省</option>-->
-                    <!--</select>-->
-                    <!--</div>-->
-                    <!--<div class="layui-input-inline">-->
-                    <!--<select name="quiz2">-->
-                    <!--<option value="">请选择市</option>-->
-                    <!--<option value="杭州" selected="">杭州市</option>-->
-                    <!--<option value="宁波">宁波市</option>-->
-                    <!--<option value="温州">温州市</option>-->
-                    <!--<option value="温州">绍兴市</option>-->
-                    <!--</select>-->
-                    <!--</div>-->
-                    <!--<div class="layui-input-inline">-->
-                    <!--<select name="quiz3">-->
-                    <!--<option value="">请选择县/区</option>-->
-                    <!--<option value="西湖区" selected="">西湖区</option>-->
-                    <!--<option value="余杭区">余杭区</option>-->
-                    <!--<option value="拱墅区">临安市</option>-->
-                    <!--</select>-->
-                    <!--</div>-->
-
-                    <div class="layui-input-block">
-                        <input type="text" name="address" lay-verify="required" autocomplete="off"
-                               class="layui-input" th:value="${store.address}"/>
+                    <label class="layui-form-label">销量</label>
+                    <div class="layui-input-inline">
+                        <input type="number" name="saleVolume" lay-verify="required" autocomplete="off"
+                               class="layui-input input_box"/>
                     </div>
                 </div>
 
-                <div class="layui-form-item layui-form-text">
-                    <label class="layui-form-label">简介</label>
-                    <div class="layui-input-block">
-                        <textarea placeholder="请输入店铺简介（选填）" name="description" class="layui-textarea"
-                                  th:text="${store.description}"></textarea>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">分类</label>
+                    <div class="layui-input-inline">
+                        <select id='sel_cats' name="categories" lay-filter="sel_cats" lay-verify="required">
+                            <option value="">请选择分类</option>
+                            <!--<option value="0" selected="" th:text="${goods.category.name}"></option>-->
+                        </select>
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="catId"/>
                     </div>
                 </div>
 
@@ -168,9 +141,7 @@
                     </div>
                 </div>
             </form>
-
         </div>
-
     </div>
 
     <div class="layui-footer">
@@ -182,16 +153,46 @@
 </div>
 
 <script>
+    var name = $.cookie('store-name');
+    $('.nav_title').text(name);
+
+    // 动态创建下拉框
+    $.ajax({
+        type: 'post',
+        url: '/category/query',
+        data: '{\'page_index\':1, \'page_size\':99}',
+        dataType: 'json',
+        success: function (result) {
+            var count = parseInt(result.count, 10);
+            var cats = result.list;
+            console.log('count:' + count);
+
+            for (var i = 0; i < count; i++) {
+                var cat = cats[i];
+                if (i == 0) {
+                    $('#sel_cats').append('<option value="' + i + '" selected=""> ' + cat.name + '</option>');
+                } else {
+                    $('#sel_cats').append('<option value="' + i + '">' + cat.name + '</option>');
+                }
+            }
+        },
+        error: function () {
+            layer.msg('查询分类失败', {icon: 5});
+        }
+    });
 
     layui.use('form', function () {
         var form = layui.form;
         //监听提交
         form.on('submit(confirm)', function (data) {
+            var cat = $('#sel_cats option:selected').text();
+            data.field['category'] = {'name': cat};
             var message = JSON.stringify(data.field);
             console.log(message);
+
             $.ajax({
                 type: "post",
-                url: "/store/update",
+                url: "/goods/create",
                 async: true, // 异步处理
                 dataType: "json", // 预期的服务器响应的数据类型。
                 data: message, // 	规定要发送到服务器的数据
@@ -200,10 +201,8 @@
                     console.log('update succeed: ' + result);
                     if (result.status == 1) {
                         layer.msg('修改成功', {icon: 6}, function () {
-                            // 更新
-                            $('.nav_title').text(message.name);
                             // 跳转
-                            location.href = '/store_main.html';
+                            location.href = '/goods_main.html';
                         })
                     } else {
                         layer.msg(result.errorCode.message, {icon: 5})
@@ -215,11 +214,11 @@
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
+
     });
 
     layui.use('laydate', function () {
         var laydate = layui.laydate;
-
         //日期
         laydate.render({
             elem: '#sale_from'
@@ -242,17 +241,19 @@
         //普通图片上传
         var uploadInst = upload.render({
             elem: '#upload_btn'
-            , url: '/upload/image_store'
+            , url: '/upload/image_goods'
             , method: 'post'
             , accept: 'images'
             , before: function (obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
                     $('#upload_img').attr('src', result); //图片链接（base64）
-                });
+                })
             }
+            , auto: false
+            , bindAction: '#confirm'
             , data: {
-                'store_id': $('#hidden_store_id').val()
+                'goods_id': $('#hidden_goods_id').val()
             }
             , done: function (res) {
                 if (res.status == 0) {
@@ -274,7 +275,7 @@
     });
 
     function logout() {
-        layer.confirm('确定退出登录？', function () {
+        layer.confirm('确定退出登录？', function (index) {
             $.ajax({
                 type: "post",
                 url: "/user/logout",
@@ -296,7 +297,6 @@
             });
         });
     }
-
 </script>
 
 </body>

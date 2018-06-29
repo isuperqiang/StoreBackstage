@@ -39,10 +39,10 @@
                     <a href="category_main.html">分类管理</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="store_main.html">店铺设置</a>
+                    <a href="member_main.html">会员管理</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="member_main.html">会员管理</a>
+                    <a href="store_main.html">店铺设置</a>
                 </li>
             </ul>
         </div>
@@ -64,7 +64,7 @@
                 </div>
 
                 <div class="layui-input-inline" style="margin-left: 20px">
-                    <button id="btn_add" class="layui-btn">添加商品</button>
+                    <a href="goods_new.html" class="layui-btn" style="color:#fff;">添加商品</a>
                 </div>
             </div>
 
@@ -200,13 +200,6 @@
                     curr: 1
                 }
             });
-        });
-
-        // 添加按钮
-        $('#btn_add').on('click', function () {
-            console.log('click add button');
-            //prompt层
-            location.href = '/goods_create';
         });
     });
 

@@ -41,8 +41,9 @@ public class HelloController {
         return "member_main";
     }
 
-    @GetMapping("/goods_edit.html")
+    @GetMapping("/goods_new.html")
     public String createGoods() {
-        return "goods_edit";
+        return "goods_new";
     }
+
 }

@@ -31,17 +31,17 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree">
-                <li class="layui-nav-item layui-this layui-nav-itemed" lay-filter="nav_goods_manage">
+                <li class="layui-nav-item layui-this layui-nav-itemed">
                     <a href="goods_main.html">商品管理</a>
                 </li>
-                <li class="layui-nav-item" lay-filter="nav_category_manage">
+                <li class="layui-nav-item">
                     <a href="category_main.html">分类管理</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="store_edit.html" lay-filter="nav_store_manage">店铺设置</a>
+                    <a href="member_main.html">会员管理</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" lay-filter="nav_member_manage">会员管理</a>
+                    <a href="store_edit.html">店铺设置</a>
                 </li>
             </ul>
         </div>
@@ -125,12 +125,13 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label">分类</label>
                     <div class="layui-input-inline">
-                        <select name="quiz1" lay-verify="required">
+                        <select id='sel_cats' name="categories" lay-filter="sel_cats" lay-verify="required">
                             <option value="">请选择分类</option>
-                            <option value="浙江" selected="">浙江省</option>
-                            <option value="你的工号">江西省</option>
-                            <option value="你最喜欢的老师">福建省</option>
+                            <!--<option value="0" selected="" th:text="${goods.category.name}"></option>-->
                         </select>
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="catId"/>
                     </div>
                 </div>
 
@@ -153,18 +154,43 @@
 </div>
 
 <script>
-    console.log('set store');
     var name = $.cookie('store-name');
     $('.nav_title').text(name);
+
+    // 动态创建下拉框
+    $.ajax({
+        type: 'post',
+        url: '/category/query',
+        data: '{\'page_index\':1, \'page_size\':99}',
+        dataType: 'json',
+        success: function (result) {
+            var count = parseInt(result.count, 10);
+            var cats = result.list;
+            console.log('count:' + count);
+
+            for (var i = 0; i < count; i++) {
+                var cat = cats[i];
+                if (i == 0) {
+                    $('#sel_cats').append('<option value="' + i + '" selected=""> ' + cat.name + '</option>');
+                } else {
+                    $('#sel_cats').append('<option value="' + i + '">' + cat.name + '</option>');
+                }
+            }
+        },
+        error: function () {
+            layer.msg('查询分类失败', {icon: 5});
+        }
+    });
 
     layui.use('form', function () {
         var form = layui.form;
         //监听提交
         form.on('submit(confirm)', function (data) {
+            var cat = $('#sel_cats option:selected').text();
+            data.field['category'] = {'name': cat};
             var message = JSON.stringify(data.field);
             console.log(message);
 
-            // 坑爹
             $.ajax({
                 type: "post",
                 url: "/goods/update",
@@ -177,7 +203,7 @@
                     if (result.status == 1) {
                         layer.msg('修改成功', {icon: 6}, function () {
                             // 跳转
-                            location.href = '/goods_show.html?goods_id=' + message.goodsId;
+                            location.href = '/goods_show.html?goods_id=' + data.field['goodsId'];
                         })
                     } else {
                         layer.msg(result.errorCode.message, {icon: 5})

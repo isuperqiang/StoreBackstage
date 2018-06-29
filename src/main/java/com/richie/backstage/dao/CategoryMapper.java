@@ -72,4 +72,12 @@ public interface CategoryMapper {
      * @return
      */
     int queryCatCount(@Param("user_id") int userId);
+
+    /**
+     * 根据名称查询 ID
+     *
+     * @param name
+     * @return
+     */
+    Integer queryCatIdByName(@Param("name") String name);
 }
