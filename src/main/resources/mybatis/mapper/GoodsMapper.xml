@@ -14,7 +14,6 @@
         <result property="saleVolume" column="sale_volume"/>
         <result property="cost" column="cost"/>
         <result property="onSale" column="on_sale"/>
-        <result property="formattedDate" column="formatted_date"/>
         <!--嵌套结果查询-->
         <!--一对一查询-->
         <association property="category" column="cat_id" javaType="Category">
@@ -44,7 +43,7 @@
 
     <select id="queryGoodsById" parameterType="int" resultMap="goodsResult">
         select g.goods_id, g.gname, g.picture, g.price, g.specification, g.cost, g.stock, g.sale_volume, g.on_sale, g.cat_id,
-        date_format(g.created_at, '%Y-%m-%d %H:%m') as formatted_date, c.name
+        date_format(g.created_at, '%Y-%m-%d %H:%m') as created_at, c.name
         from goods g, category c
         where g.goods_id = #{goods_id}
         and g.cat_id = c.cat_id
@@ -52,7 +51,7 @@
 
     <select id="queryGoodsByPage" resultMap="goodsResult">
         select g.goods_id, g.gname, g.picture, g.price, g.specification, g.cost, g.stock, g.sale_volume, g.on_sale, g.cat_id,
-        date_format(g.created_at, '%Y-%m-%d %H:%m') as formatted_date, c.name
+        date_format(g.created_at, '%Y-%m-%d %H:%m') as created_at, c.name
         from goods g, category c
         where g.gname like '%${name}%' and g.user_id = #{user_id}
         and g.cat_id = c.cat_id

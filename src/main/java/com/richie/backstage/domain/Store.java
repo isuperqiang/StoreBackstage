@@ -1,7 +1,6 @@
 package com.richie.backstage.domain;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author richie on 2018.06.25
@@ -23,7 +22,7 @@ public class Store implements Serializable {
     // 电话
     private String phone;
     // 创建时间
-    private Date createdAt;
+    private String createdAt;
     // 介绍
     private String description;
     // 均价
@@ -75,11 +74,11 @@ public class Store implements Serializable {
         this.category = category;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 

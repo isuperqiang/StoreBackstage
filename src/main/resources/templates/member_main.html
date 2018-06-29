@@ -32,17 +32,17 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree">
-                <li class="layui-nav-item" lay-filter="nav_goods_manage">
+                <li class="layui-nav-item">
                     <a href="goods_main.html">商品管理</a>
                 </li>
-                <li class="layui-nav-item layui-this layui-nav-itemed" lay-filter="nav_category_manage">
+                <li class="layui-nav-item">
                     <a href="category_main.html">分类管理</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="store_main.html" lay-filter="nav_store_manage">店铺设置</a>
+                    <a href="store_main.html">店铺设置</a>
                 </li>
-                <li class="layui-nav-item">
-                    <a href="member_main.html" lay-filter="nav_member_manage">会员管理</a>
+                <li class="layui-nav-item layui-this layui-nav-itemed">
+                    <a href="member_main.html">会员管理</a>
                 </li>
             </ul>
         </div>
@@ -50,31 +50,30 @@
 
     <div class="layui-body main_body">
         <!-- 内容主体区域 -->
-        <h1>分类管理</h1>
+        <h1>会员管理</h1>
         <hr/>
         <div>
             <div class="layui-form-item" style="margin-top: 20px">
-                <label class="layui-form-label">分类名称</label>
+                <label class="layui-form-label">会员名称</label>
                 <div class="layui-input-inline">
-                    <input id='text_input_name' type="text" name="category_name" lay-verify="required"
-                           autocomplete="off"
-                           class="layui-input input_box" placeholder="请输入分类名称"/>
+                    <input id='text_input_name' type="text" name="nickname" lay-verify="required" autocomplete="off"
+                           class="layui-input input_box" placeholder="请输入会员名称"/>
                 </div>
                 <div class="layui-input-inline" style="margin-left: 40px">
                     <button id="btn_query" class="layui-btn">查询</button>
                 </div>
 
                 <div class="layui-input-inline" style="margin-left: 20px">
-                    <button id="btn_add" class="layui-btn">添加分类</button>
+                    <button id="btn_add" class="layui-btn">添加会员</button>
                 </div>
             </div>
 
-            <script type="text/html" id="category_operation">
+            <script type="text/html" id="member_operation">
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </script>
 
-            <table class="layui-hide" id="category" lay-filter="category_list"></table>
+            <table class="layui-hide" id="member" lay-filter="member_list"></table>
 
         </div>
 
@@ -98,15 +97,15 @@
         var table = layui.table;
 
         //监听工具条
-        table.on('tool(category_list)', function (obj) {
+        table.on('tool(member_list)', function (obj) {
             var data = obj.data;
             console.log('click:' + data.username + data.city);
             if (obj.event === 'del') {
-                var d = {'catId': data.catId};
-                layer.confirm('确定删除该分类？', function (index) {
+                var d = {'memberId': data.memberId};
+                layer.confirm('确定删除该会员？', function (index) {
                     $.ajax({
                         type: "post",
-                        url: "/category/delete",
+                        url: "/member/delete",
                         async: true, // 异步处理
                         dataType: "json", // 预期的服务器响应的数据类型。
                         data: JSON.stringify(d), // 	规定要发送到服务器的数据
@@ -127,51 +126,26 @@
                     });
                 });
             } else if (obj.event === 'edit') {
-                // prompt层
-                layer.prompt({title: '输入分类名称，并确认', formType: 2}, function (text, index) {
-                    layer.close(index);
-                    layer.msg('您最后写下了：' + text);
-                    // refresh
-                    var cat = {'catId': data.catId, 'name': text, 'sequence': data.sequence};
-                    $.ajax({
-                        type: "post",
-                        url: "/category/update",
-                        async: true, // 异步处理
-                        dataType: "json", // 预期的服务器响应的数据类型。
-                        data: JSON.stringify(cat), // 	规定要发送到服务器的数据
-                        contentType: 'application/json',
-                        success: function (result) {
-                            console.log('edit succeed: ' + result);
-                            if (result.status == 1) {
-                                layer.msg('修改成功', {icon: 6});
-                                obj.update({
-                                    'name': text
-                                });
-                            } else {
-                                layer.msg(result.errorCode.message, {icon: 5})
-                            }
-                        },
-                        error: function () {
-                            layer.msg('请求失败', {icon: 5})
-                        }
-                    });
-                });
+
             }
         });
 
         table.render({
-            elem: '#category'
-            , url: '/category/query'
+            elem: '#member'
+            , url: '/member/query'
             , cellMinWidth: 80
             , method: 'post'
             , cols: [
                 [
                     {type: 'checkbox'}
-                    , {field: 'catId', title: 'ID', width: 100, unresize: true, sort: true}
-                    , {field: 'name', title: '名称'}
+                    , {field: 'memberId', title: 'ID', width: 100, unresize: true, sort: true}
+                    , {field: 'nickname', title: '名称'}
+                    , {field: 'gender', title: '性别', width: 200}
+                    , {field: 'phone', title: '手机号', width: 200}
+                    , {field: 'credit', title: '积分', width: 200}
+                    , {field: 'cardNo', title: '卡号', width: 200}
                     , {field: 'createdAt', title: '创建时间', width: 200}
-                    , {field: 'sequence', title: '序号', width: 200}
-                    , {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#category_operation'},
+                    , {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#member_operation'},
                 ]]
             , response: {
                 dataName: 'list',
@@ -193,7 +167,7 @@
             var text = $('#text_input_name').val();
             table.reload('render_cats', {
                 where: {
-                    'name': text
+                    'nickname': text
                 }
                 , page: {
                     curr: 1
@@ -205,33 +179,8 @@
         $('#btn_add').on('click', function () {
             console.log('click add button');
             //prompt层
-            layer.prompt({title: '输入分类名称，并确认', formType: 2}, function (text, index) {
+            layer.prompt({title: '输入会员名称，并确认', formType: 2}, function (text, index) {
                 layer.close(index);
-                var cat = {'name': text};
-                $.ajax({
-                    type: "post",
-                    url: "/category/create",
-                    async: true, // 异步处理
-                    dataType: "json", // 预期的服务器响应的数据类型。
-                    data: JSON.stringify(cat), // 	规定要发送到服务器的数据
-                    contentType: 'application/json',
-                    success: function (result) {
-                        console.log('query succeed: ' + result);
-                        if (result.status == 1) {
-                            layer.msg('添加成功', {icon: 6});
-                            table.reload('render_cats', {
-                                page: {
-                                    curr: 1
-                                }
-                            });
-                        } else {
-                            layer.msg(result.errorCode.message, {icon: 5})
-                        }
-                    },
-                    error: function () {
-                        layer.msg('请求失败', {icon: 5})
-                    }
-                });
                 return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
             });
         });

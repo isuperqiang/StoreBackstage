@@ -36,6 +36,11 @@ public class HelloController {
         return "category_main";
     }
 
+    @GetMapping("/member_main.html")
+    public String memberMain() {
+        return "member_main";
+    }
+
     @GetMapping("/goods_edit.html")
     public String createGoods() {
         return "goods_edit";

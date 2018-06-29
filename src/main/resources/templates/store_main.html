@@ -30,17 +30,17 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree">
-                <li class="layui-nav-item" lay-filter="nav_goods_manage">
+                <li class="layui-nav-item">
                     <a href="goods_main.html">商品管理</a>
                 </li>
-                <li class="layui-nav-item" lay-filter="nav_category_manage">
+                <li class="layui-nav-item">
                     <a href="category_main.html">分类管理</a>
                 </li>
                 <li class="layui-nav-item layui-this layui-nav-itemed">
-                    <a href="store_main.html" lay-filter="nav_store_manage">店铺设置</a>
+                    <a href="store_main.html">店铺设置</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" lay-filter="nav_member_manage">会员管理</a>
+                    <a href="member_main.html">会员管理</a>
                 </li>
             </ul>
         </div>
@@ -69,7 +69,7 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">创建时间</label>
                 <label class="layui-form-label show-info"
-                       th:text="${#dates.format(store.createdAt, 'yyyy-MM-dd HH:mm')}">2018-06-27</label>
+                       th:text="${store.createdAt}">2018-06-27</label>
             </div>
 
             <div class="layui-form-item">

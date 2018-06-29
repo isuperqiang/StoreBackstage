@@ -17,21 +17,6 @@
     <div class="layui-header">
         <div class="layui-logo">商家后台管理系统</div>
         <div class="div_center"><h2 class="nav_title">世纪华联</h2></div>
-
-        <!-- 头部区域（可配合layui已有的水平导航） -->
-        <!--<ul class="layui-nav layui-layout-left">-->
-        <!--<li class="layui-nav-item"><a href="">控制台</a></li>-->
-        <!--<li class="layui-nav-item"><a href="">商品管理</a></li>-->
-        <!--<li class="layui-nav-item"><a href="">用户</a></li>-->
-        <!--<li class="layui-nav-item">-->
-        <!--<a href="javascript:;">其它系统</a>-->
-        <!--<dl class="layui-nav-child">-->
-        <!--<dd><a href="">邮件管理</a></dd>-->
-        <!--<dd><a href="">消息管理</a></dd>-->
-        <!--<dd><a href="">授权管理</a></dd>-->
-        <!--</dl>-->
-        <!--</li>-->
-        <!--</ul>-->
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <dl class="layui-nav-child">
@@ -47,25 +32,18 @@
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree">
-                <li class="layui-nav-item layui-this layui-nav-itemed" lay-filter="nav_goods_manage">
+                <li class="layui-nav-item layui-this layui-nav-itemed">
                     <a href="goods_main.html">商品管理</a>
-                    <!--<dl class="layui-nav-child">-->
-                    <!--<dd><a href="javascript:;">列表一</a></dd>-->
-                    <!--<dd><a href="javascript:;">列表二</a></dd>-->
-                    <!--<dd><a href="javascript:;">列表三</a></dd>-->
-                    <!--<dd><a href="">超链接</a></dd>-->
-                    <!--</dl>-->
                 </li>
-                <li class="layui-nav-item" lay-filter="nav_category_manage">
+                <li class="layui-nav-item">
                     <a href="category_main.html">分类管理</a>
-                    <!--<dl class="layui-nav-child">-->
-                    <!--<dd><a href="javascript:;">列表一</a></dd>-->
-                    <!--<dd><a href="javascript:;">列表二</a></dd>-->
-                    <!--<dd><a href="">超链接</a></dd>-->
-                    <!--</dl>-->
                 </li>
-                <li class="layui-nav-item"><a href="store_main.html" lay-filter="nav_store_manage">店铺设置</a></li>
-                <li class="layui-nav-item"><a href="javascript:;" lay-filter="nav_member_manage">会员管理</a></li>
+                <li class="layui-nav-item">
+                    <a href="store_main.html">店铺设置</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="member_main.html">会员管理</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -120,9 +98,6 @@
 </div>
 
 <script>
-    // var name = $('.nav_title').text();
-    // $.cookie('store-name', name , {expires: 3600 * 24, path: '/'});
-
     var name = $.cookie('store-name');
     $('.nav_title').text(name);
 
@@ -196,7 +171,7 @@
                     , {field: 'price', title: '单价', width: 200, sort: true}
                     , {field: 'stock', title: '库存', width: 200, sort: true}
                     , {field: 'saleVolume', title: '销量', width: 200, sort: true}
-                    , {field: 'formattedDate', title: '创建时间', width: 200}
+                    , {field: 'createdAt', title: '创建时间', width: 200}
                     , {fixed: 'right', title: '操作', width: 200, align: 'center', toolbar: '#goods_operation'},
                 ]]
             , response: {

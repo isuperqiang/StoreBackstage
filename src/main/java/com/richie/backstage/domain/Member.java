@@ -1,7 +1,6 @@
 package com.richie.backstage.domain;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author richie on 2018.06.29
@@ -23,13 +22,11 @@ public class Member implements Serializable {
     // 卡号
     private String cardNo;
     // 创建日期
-    private Date createdAt;
+    private String createdAt;
     // 下单数
     private int orderCount;
 
     private User user;
-
-    private String formattedDate;
 
     public int getMemberId() {
         return memberId;
@@ -79,11 +76,11 @@ public class Member implements Serializable {
         this.cardNo = cardNo;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
@@ -101,14 +98,6 @@ public class Member implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public String getFormattedDate() {
-        return formattedDate;
-    }
-
-    public void setFormattedDate(String formattedDate) {
-        this.formattedDate = formattedDate;
     }
 
     @Override

@@ -20,9 +20,9 @@
         <association property="user" column="user_id" javaType="User">
             <id property="userId" column="user_id"/>
             <result property="username" column="username"/>
-            <result property="password" column="password"/>
-            <result property="lastVisit" column="last_visit"/>
-            <result property="createdAt" column="created_at"/>
+            <!--<result property="password" column="password"/>-->
+            <!--<result property="lastVisit" column="last_visit"/>-->
+            <!--<result property="createdAt" column="created_at"/>-->
             <result property="phone" column="phone"/>
         </association>
     </resultMap>
@@ -44,8 +44,8 @@
     </update>
 
     <select id="queryStore" parameterType="int" resultMap="storeResult">
-        select s.store_id, s.name, s.logo, s.description, s.created_at, s.address, s.phone, s.avg_price, s.sale_from,
-        s.sale_to, s.category, u.user_id, u.username, u.phone
+        select s.store_id, s.name, s.logo, s.description, s.address, s.phone, s.avg_price, s.sale_from,
+        date_format(s.created_at, '%Y-%m-%d %H:%m') as created_at, s.sale_to, s.category, u.user_id, u.username, u.phone
         from store s, user u
         where s.user_id = #{user_id}
         and s.user_id = u.user_id

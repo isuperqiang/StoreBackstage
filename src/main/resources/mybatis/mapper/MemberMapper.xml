@@ -12,7 +12,6 @@
         <result property="cardNo" column="card_no"/>
         <result property="orderCount" column="order_count"/>
         <result property="createdAt" column="created_at"/>
-        <result property="formattedDate" column="formatted_date"/>
     </resultMap>
 
     <insert id="createMember">
@@ -30,7 +29,7 @@
     </delete>
 
     <select id="queryMemberByPage" resultMap="memberResult">
-        select member_id, nickname, gender, phone, credit, order_count, card_no, created_at, date_format(created_at, '%Y-%m-%d %H:%m') as formatted_date
+        select member_id, nickname, gender, phone, credit, order_count, card_no, date_format(created_at, '%Y-%m-%d %H:%m') as created_at
         from member
         where nickname like '%${nickname}%' and user_id = #{user_id}
         limit #{page_size} offset #{page_index}
