@@ -73,8 +73,8 @@ public class CategoryService {
         return categoryMapper.queryCategoryByPage(name, pageIndex * pageSize, pageSize, userId);
     }
 
-    @Cacheable(value = "queryCount", key = "'cat_count'")
-    public int queryCount(int userId) {
-        return categoryMapper.queryCount(userId);
+    @Cacheable(value = "queryCatCount", key = "'cat_count'")
+    public int queryCatCount(int userId) {
+        return categoryMapper.queryCatCount(userId);
     }
 }

@@ -74,7 +74,7 @@ public class CategoryController {
         if (categories != null) {
             int count;
             if (StringUtils.isEmpty(name)) {
-                count = categoryService.queryCount(userId);
+                count = categoryService.queryCatCount(userId);
             } else {
                 count = categories.size();
             }

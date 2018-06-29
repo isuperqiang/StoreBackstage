@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.richie.backstage.dao.MemberMapper">
+
+    <resultMap id="memberResult" type="Member">
+        <!--property 对应 User 的成员变量，column 对应数据表的列名-->
+        <id property="memberId" column="member_id"/>
+        <result property="nickname" column="nickname"/>
+        <result property="phone" column="phone"/>
+        <result property="gender" column="gender"/>
+        <result property="credit" column="credit"/>
+        <result property="cardNo" column="card_no"/>
+        <result property="orderCount" column="order_count"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="formattedDate" column="formatted_date"/>
+    </resultMap>
+
+    <insert id="createMember">
+        insert into member (nickname, phone, gender, card_no, user_id)
+        values (#{nickname}, #{phone}, #{gender}, #{card_no}, #{user_id})
+    </insert>
+
+    <update id="updateMember">
+        update member set nickname = #{nickname}, phone = #{phone}, gender = #{gender}, card_no = #{card_no}
+        where member_id = #{member_id}
+    </update>
+
+    <delete id="deleteMember" parameterType="int">
+        delete from member where member_id = #{member_id}
+    </delete>
+
+    <select id="queryMemberByPage" resultMap="memberResult">
+        select member_id, nickname, gender, phone, credit, order_count, card_no, created_at, date_format(created_at, '%Y-%m-%d %H:%m') as formatted_date
+        from member
+        where nickname like '%${nickname}%' and user_id = #{user_id}
+        limit #{page_size} offset #{page_index}
+    </select>
+
+    <select id="queryMemberCount" parameterType="int" resultType="int">
+        select count(member_id)
+        from member
+        where user_id = #{user_id}
+    </select>
+
+</mapper>

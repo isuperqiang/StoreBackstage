@@ -98,8 +98,13 @@ public class Result<T> {
         DELETE_GOODS_FAILED(402, "删除商品失败"),
         QUERY_GOODS_FAILED(403, "查询不到商品"),
 
-        UPLOAD_IMAGE_FAILED(500, "文件上传失败"),
-        UPLOAD_IMAGE_EMPTY(501, "文件不能为空");
+        CREATE_MEMBER_FAILED(500, "创建会员失败"),
+        UPDATE_MEMBER_FAILED(501, "更新会员失败"),
+        DELETE_MEMBER_FAILED(502, "删除会员失败"),
+        QUERY_MEMBER_FAILED(503, "查询不到会员"),
+
+        UPLOAD_IMAGE_FAILED(900, "文件上传失败"),
+        UPLOAD_IMAGE_EMPTY(901, "文件不能为空");
 
         private int code;
         private String message;

@@ -30,6 +30,7 @@
         <typeAlias alias="Store" type="com.richie.backstage.domain.Store"/>
         <typeAlias alias="Category" type="com.richie.backstage.domain.Category"/>
         <typeAlias alias="Goods" type="com.richie.backstage.domain.Goods"/>
+        <typeAlias alias="Member" type="com.richie.backstage.domain.Member"/>
     </typeAliases>
 
     <!--官方文档：http://www.mybatis.org/mybatis-3/zh/index.html-->

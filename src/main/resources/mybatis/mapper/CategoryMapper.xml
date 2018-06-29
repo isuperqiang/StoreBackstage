@@ -45,7 +45,7 @@
         select max(sequence) from category where user_id = #{user_id}
     </select>
 
-    <select id="queryCount" parameterType="int" resultType="int">
+    <select id="queryCatCount" parameterType="int" resultType="int">
         select count(cat_id)
         from category
         where user_id = #{user_id}
