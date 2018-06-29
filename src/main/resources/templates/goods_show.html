@@ -6,6 +6,8 @@
     <title>商家管理后台</title>
     <link rel="stylesheet" th:href="@{/static/res/layui/css/layui.css}" media="all"/>
     <link rel="stylesheet" th:href="@{/static/css/user.css}"/>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script th:src="@{/static/js/jquery.cookie.js}"></script>
 </head>
 
 <body class="layui-layout-body">
@@ -111,6 +113,9 @@
 </div>
 
 <script type="text/javascript">
+    var name = $.cookie('store-name');
+    $('.nav_title').text(name);
+
     function logout() {
         layer.confirm('确定退出登录？', function (index) {
             $.ajax({

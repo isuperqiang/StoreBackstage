@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author richie on 2018.06.25
@@ -55,12 +57,16 @@ public class StoreController {
     @ResponseBody
     @PostMapping("/store/update")
     public Result updateStore(@RequestBody Store store, @CookieValue(Constant.USER_TOKEN) String token,
-                              HttpServletRequest request) {
+                              HttpServletRequest request, HttpServletResponse response) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);
         logger.info("token:{}, userId:{}", token, userId);
         store.setUser(userService.findUserById(userId));
         boolean ret = storeService.updateStore(store);
         if (ret) {
+            Cookie cookie = new Cookie("store-name", store.getName());
+            cookie.setPath("/");
+            cookie.setMaxAge(24 * 3600);
+            response.addCookie(cookie);
             return Result.createYesResult();
         } else {
             return Result.createNoResult(Result.ErrorCode.UPDATE_STORE_FAILED);

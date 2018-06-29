@@ -1,8 +1,10 @@
 package com.richie.backstage.controller;
 
 import com.richie.backstage.config.Constant;
+import com.richie.backstage.domain.Store;
 import com.richie.backstage.domain.User;
 import com.richie.backstage.handler.Result;
+import com.richie.backstage.service.StoreService;
 import com.richie.backstage.service.UserService;
 import com.richie.backstage.util.ApiUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,12 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private UserService userService;
+    private StoreService storeService;
+
+    @Autowired
+    public void setStoreService(StoreService storeService) {
+        this.storeService = storeService;
+    }
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -44,6 +52,12 @@ public class UserController {
             cookie.setMaxAge(expiry); // 单位 秒
             cookie.setPath("/");
             response.addCookie(cookie);
+
+            Store store = storeService.queryStore(user.getUserId());
+            Cookie cookieStore = new Cookie("store-name", store.getName());
+            cookieStore.setMaxAge(expiry);
+            cookieStore.setPath("/");
+            response.addCookie(cookieStore);
             return Result.createYesResult(uuid);
         } else {
             return Result.createNoResult(Result.ErrorCode.LOGIN_FAILED);

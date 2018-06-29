@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class HelloController {
 
-    @GetMapping("/hello")
+    @GetMapping("/helloworld")
     @ResponseBody
     public String sayHello(){
-        return "hello, world";
+        return "Hello, World";
     }
 
     @GetMapping("/login.html")
@@ -40,5 +40,4 @@ public class HelloController {
     public String createGoods() {
         return "goods_edit";
     }
-
 }

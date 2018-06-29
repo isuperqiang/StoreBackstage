@@ -8,13 +8,14 @@
     <link rel="stylesheet" th:href="@{/static/css/user.css}"/>
     <script type="text/javascript" th:src="@{/static/res/layui/layui.js}" charset="utf-8"></script>
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script th:src="@{/static/js/jquery.cookie.js}"></script>
 </head>
 
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo">商家后台管理系统</div>
-        <div class="div_center"><h2 class="nav_title">世纪华联</h2></div>
+        <div class="div_center"><h2 class="nav_title" th:text="${store.name}">世纪华联</h2></div>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <dl class="layui-nav-child">
@@ -199,8 +200,9 @@
                     console.log('update succeed: ' + result);
                     if (result.status == 1) {
                         layer.msg('修改成功', {icon: 6}, function () {
+                            // 更新
+                            $('.nav_title').text(message.name);
                             // 跳转
-                            // $.cookie('USER_TOKEN', result.data.uuid, {expires: 3600*24, path:'/'});
                             location.href = '/store_main.html';
                         })
                     } else {
@@ -272,7 +274,7 @@
     });
 
     function logout() {
-        layer.confirm('确定退出登录？', function (index) {
+        layer.confirm('确定退出登录？', function () {
             $.ajax({
                 type: "post",
                 url: "/user/logout",

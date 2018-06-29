@@ -7,6 +7,8 @@
     <link rel="stylesheet" th:href="@{/static/res/layui/css/layui.css}" media="all"/>
     <link rel="stylesheet" th:href="@{/static/css/user.css}"/>
     <script type="text/javascript" th:src="@{/static/res/layui/layui.js}" charset="utf-8"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script th:src="@{/static/js/jquery.cookie.js}"></script>
 </head>
 
 <body class="layui-layout-body">
@@ -151,8 +153,10 @@
 </div>
 
 <script>
-    // 脚本在网页加载时就运行
-    console.log('start script');
+    console.log('set store');
+    var name = $.cookie('store-name');
+    $('.nav_title').text(name);
+
     layui.use('form', function () {
         var form = layui.form;
         //监听提交
