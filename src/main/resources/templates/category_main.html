@@ -63,11 +63,10 @@
                 <div class="layui-input-inline" style="margin-left: 40px">
                     <button id="btn_query" class="layui-btn">查询</button>
                 </div>
-
-                <div class="layui-input-inline" style="margin-left: 20px">
-                    <button id="btn_add" class="layui-btn">添加分类</button>
-                </div>
             </div>
+
+            <button id="btn_delete" data-type="deleteCats" class="layui-btn">删除</button>
+            <button id="btn_add" class="layui-btn">添加</button>
 
             <script type="text/html" id="category_operation">
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -96,6 +95,43 @@
 
     layui.use('table', function () {
         var table = layui.table;
+
+        var $ = layui.$, active = {
+            deleteCats: function () { //获取选中数据
+                var checkStatus = table.checkStatus('render_cats')
+                    , data = checkStatus.data;
+                if (data.length == 0) {
+                    layer.msg('请选择分类');
+                } else {
+                    var da = JSON.stringify(data);
+                    console.log('da' + da);
+                    $.ajax({
+                        type: "post",
+                        url: "/category/delete_bundle",
+                        async: true, // 异步处理
+                        dataType: "json", // 预期的服务器响应的数据类型。
+                        data: da, // 	规定要发送到服务器的数据
+                        contentType: 'application/json',
+                        success: function () {
+                            layer.msg('删除成功', {icon: 6});
+                            table.reload('render_cats', {
+                                page: {
+                                    curr: 1
+                                }
+                            });
+                        },
+                        error: function () {
+                            layer.msg('请求失败', {icon: 5})
+                        }
+                    });
+                }
+            }
+        };
+
+        $('#btn_delete').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
 
         //监听工具条
         table.on('tool(category_list)', function (obj) {

@@ -77,4 +77,7 @@ create table `member`(
   CONSTRAINT `member_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8
 
+
+insert into member (nickname, phone, card_no, gender, user_id) values ('落英坠露', '18328738478', '4387298748598737480', 1, 1)
+
 ```

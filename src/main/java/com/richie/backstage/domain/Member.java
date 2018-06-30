@@ -14,7 +14,7 @@ public class Member implements Serializable {
     // 昵称
     private String nickname;
     // 性别
-    private int gender;
+    private String gender;
     // 手机号
     private String phone;
     // 积分
@@ -44,11 +44,11 @@ public class Member implements Serializable {
         this.nickname = nickname;
     }
 
-    public int getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(int gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

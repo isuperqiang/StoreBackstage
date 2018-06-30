@@ -63,12 +63,13 @@
                     <button id="btn_query" class="layui-btn">查询</button>
                 </div>
 
-                <div class="layui-input-inline" style="margin-left: 20px">
-                    <button id="btn_add" class="layui-btn">添加会员</button>
-                </div>
             </div>
 
+            <button id="btn_delete" data-type="deleteMembers" class="layui-btn">删除</button>
+            <button id="btn_add" class="layui-btn">添加</button>
+
             <script type="text/html" id="member_operation">
+                <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </script>
@@ -76,7 +77,6 @@
             <table class="layui-hide" id="member" lay-filter="member_list"></table>
 
         </div>
-
     </div>
 
     <div class="layui-footer">
@@ -96,10 +96,49 @@
     layui.use('table', function () {
         var table = layui.table;
 
+        var $ = layui.$, active = {
+            deleteMembers: function () { //获取选中数据
+                var checkStatus = table.checkStatus('render_members')
+                    , data = checkStatus.data;
+                if (data.length == 0) {
+                    layer.msg('请选择分类');
+                } else {
+                    layer.confirm('确定删除该会员？', function (index) {
+                        var da = JSON.stringify(data);
+                        console.log('da' + da);
+                        $.ajax({
+                            type: "post",
+                            url: "/member/delete_bundle",
+                            async: true, // 异步处理
+                            dataType: "json", // 预期的服务器响应的数据类型。
+                            data: da, // 	规定要发送到服务器的数据
+                            contentType: 'application/json',
+                            success: function () {
+                                layer.close(index);
+                                layer.msg('删除成功', {icon: 6});
+                                table.reload('render_members', {
+                                    page: {
+                                        curr: 1
+                                    }
+                                });
+                            },
+                            error: function () {
+                                layer.msg('请求失败', {icon: 5})
+                            }
+                        });
+                    });
+                }
+            }
+        };
+
+        $('#btn_delete').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
+
         //监听工具条
         table.on('tool(member_list)', function (obj) {
             var data = obj.data;
-            console.log('click:' + data.username + data.city);
             if (obj.event === 'del') {
                 var d = {'memberId': data.memberId};
                 layer.confirm('确定删除该会员？', function (index) {
@@ -158,14 +197,13 @@
                 limitName: 'page_size'
             }
             , page: true
-            , id: 'render_cats'
+            , id: 'render_members'
         });
 
         // 查询按钮
         $('#btn_query').on('click', function () {
-            console.log('click query button');
             var text = $('#text_input_name').val();
-            table.reload('render_cats', {
+            table.reload('render_members', {
                 where: {
                     'nickname': text
                 }
@@ -177,12 +215,8 @@
 
         // 添加按钮
         $('#btn_add').on('click', function () {
-            console.log('click add button');
             //prompt层
-            layer.prompt({title: '输入会员名称，并确认', formType: 2}, function (text, index) {
-                layer.close(index);
-                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-            });
+            layer.msg('暂未实现');
         });
     });
 

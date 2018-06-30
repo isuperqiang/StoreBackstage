@@ -63,6 +63,21 @@ public class GoodsController {
         }
     }
 
+    @PostMapping("/goods/delete_bundle")
+    @ResponseBody
+    public Result deleteGoods(@RequestBody List<Goods> goods) {
+        boolean ret = true;
+        for (Goods good : goods) {
+            boolean del = goodsService.deleteGoods(good.getGoodsId());
+            ret &= del;
+        }
+        if (ret) {
+            return Result.createYesResult();
+        } else {
+            return Result.createNoResult(Result.ErrorCode.DELETE_GOODS_FAILED);
+        }
+    }
+
     @PostMapping("/goods/query")
     @ResponseBody
     public ListResult queryGoodsByPage(@RequestParam("page_index") int pageIndex, @RequestParam("page_size") int pageSize,

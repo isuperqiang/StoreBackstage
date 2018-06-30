@@ -25,7 +25,7 @@ public interface MemberMapper {
      * @return
      * @throws SQLException
      */
-    int createMember(@Param("user_id") int userId, @Param("nickname") String nickname, @Param("gender") int gender,
+    int createMember(@Param("user_id") int userId, @Param("nickname") String nickname, @Param("gender") String gender,
                      @Param("phone") String phone, @Param("card_no") String cardNo) throws SQLException;
 
     /**
@@ -39,7 +39,7 @@ public interface MemberMapper {
      * @return
      * @throws SQLException
      */
-    int updateMember(@Param("member_id") int memberId, @Param("nickname") String nickname, @Param("gender") int gender,
+    int updateMember(@Param("member_id") int memberId, @Param("nickname") String nickname, @Param("gender") String gender,
                      @Param("phone") String phone, @Param("card_no") String cardNo) throws SQLException;
 
     /**

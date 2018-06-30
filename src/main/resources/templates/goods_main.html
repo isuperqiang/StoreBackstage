@@ -64,9 +64,11 @@
                 </div>
 
                 <div class="layui-input-inline" style="margin-left: 20px">
-                    <a href="goods_new.html" class="layui-btn" style="color:#fff;">添加商品</a>
                 </div>
             </div>
+
+            <button id="btn_delete" data-type="deleteGoods" class="layui-btn">删除</button>
+            <a href="goods_new.html" class="layui-btn" style="color:#fff;">添加</a>
 
             <div class="layui-tab layui-tab-brief" lay-filter="goods_status">
                 <ul class="layui-tab-title">
@@ -121,6 +123,43 @@
 
     layui.use('table', function () {
         var table = layui.table;
+
+        var $ = layui.$, active = {
+            deleteGoods: function () { //获取选中数据
+                var checkStatus = table.checkStatus('render_goods')
+                    , data = checkStatus.data;
+                if (data.length == 0) {
+                    layer.msg('请选择商品');
+                } else {
+                    var da = JSON.stringify(data);
+                    console.log('da' + da);
+                    $.ajax({
+                        type: "post",
+                        url: "/goods/delete_bundle",
+                        async: true, // 异步处理
+                        dataType: "json", // 预期的服务器响应的数据类型。
+                        data: da, // 	规定要发送到服务器的数据
+                        contentType: 'application/json',
+                        success: function () {
+                            layer.msg('删除成功', {icon: 6});
+                            table.reload('render_goods', {
+                                page: {
+                                    curr: 1
+                                }
+                            });
+                        },
+                        error: function () {
+                            layer.msg('请求失败', {icon: 5})
+                        }
+                    });
+                }
+            }
+        };
+
+        $('#btn_delete').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+        });
 
         //监听工具条
         table.on('tool(goods_list)', function (obj) {

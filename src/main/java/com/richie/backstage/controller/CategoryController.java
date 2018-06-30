@@ -64,6 +64,20 @@ public class CategoryController {
         }
     }
 
+    @PostMapping("/delete_bundle")
+    public Result deleteCategories(@RequestBody List<Category> categories) {
+        boolean ret = true;
+        for (Category category : categories) {
+            boolean deleted = categoryService.deleteCategory(category.getCatId());
+            ret &= deleted;
+        }
+        if (ret) {
+            return Result.createYesResult();
+        } else {
+            return Result.createNoResult(Result.ErrorCode.DELETE_CATEGORY_FAILED);
+        }
+    }
+
     @PostMapping("/query")
     public ListResult queryAllCategories(@CookieValue(Constant.USER_TOKEN) String token, @RequestParam(value = "page_index",
             defaultValue = "1") int pageIndex, @RequestParam(value = "page_size", defaultValue = "10") int pageSize,

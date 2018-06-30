@@ -63,6 +63,20 @@ public class MemberController {
         }
     }
 
+    @PostMapping("/delete_bundle")
+    public Result deleteMembers(@RequestBody List<Member> members) {
+        boolean ret = true;
+        for (Member member : members) {
+            boolean del = memberService.deleteMember(member.getMemberId());
+            ret &= del;
+        }
+        if (ret) {
+            return Result.createYesResult();
+        } else {
+            return Result.createNoResult(Result.ErrorCode.DELETE_MEMBER_FAILED);
+        }
+    }
+
     @PostMapping("/query")
     public ListResult queryAllCategories(@CookieValue(Constant.USER_TOKEN) String token, @RequestParam(value = "page_index",
             defaultValue = "1") int pageIndex, @RequestParam(value = "page_size", defaultValue = "10") int pageSize,
