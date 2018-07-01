@@ -34,9 +34,10 @@ public class GoodsService {
 
     @CacheEvict(value = "deleteGoods", key = "'goods_count'")
     public boolean createGoods(Goods goods, int userId) {
+        int catId = categoryMapper.queryCatIdByName(goods.getCategory().getName());
         try {
             int key = goodsMapper.createGoods(goods.getGname(), goods.getSpecification(), goods.getPrice(), goods.getStock(),
-                    goods.getSaleVolume(), goods.getCost(), userId);
+                    goods.getSaleVolume(), goods.getCost(), userId, catId);
             return key > 0;
         } catch (SQLException e) {
             logger.error("create goods failed", e);

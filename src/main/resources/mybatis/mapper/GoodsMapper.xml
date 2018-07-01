@@ -23,8 +23,8 @@
     </resultMap>
 
     <insert id="createGoods">
-        insert into goods (gname, specification, price, cost, stock, sale_volume, user_id)
-        values (#{name}, #{specification}, #{price}, #{cost}, #{stock}, #{sale_volume}, #{user_id})
+        insert into goods (gname, specification, price, cost, stock, sale_volume, user_id, cat_id)
+        values (#{name}, #{specification}, #{price}, #{cost}, #{stock}, #{sale_volume}, #{user_id}, #{cat_id})
     </insert>
 
     <update id="updateGoods">
@@ -55,6 +55,7 @@
         from goods g, category c
         where g.gname like '%${name}%' and g.user_id = #{user_id}
         and g.cat_id = c.cat_id
+        order by created_at desc
         limit #{page_size} offset #{page_index}
     </select>
 

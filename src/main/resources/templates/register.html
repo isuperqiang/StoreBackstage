@@ -64,12 +64,15 @@
                 layer.msg('两次输入的密码不一致', {icon: 5});
                 return false;
             }
+            if (true) {
+                layer.msg('暂时不允许注册');
+                return false;
+            }
             var varReg = {
                 'phone': data.field.phone,
                 'password': data.field.password
             };
             var jsonReg = JSON.stringify(varReg);
-            console.log('req data:' + jsonReg);
             $.ajax({
                 type: "post",
                 url: "/user/register",

@@ -25,12 +25,13 @@ public interface GoodsMapper {
      * @param saleVolume
      * @param cost
      * @param userId
+     * @param catId
      * @return
      * @throws SQLException
      */
     int createGoods(@Param("name") String name, @Param("specification") String specification,
                     @Param("price") double price, @Param("stock") int stock, @Param("sale_volume") int saleVolume,
-                    @Param("cost") double cost, @Param("user_id") int userId) throws SQLException;
+                    @Param("cost") double cost, @Param("user_id") int userId, @Param("cat_id") int catId) throws SQLException;
 
     /**
      * 更新商品
