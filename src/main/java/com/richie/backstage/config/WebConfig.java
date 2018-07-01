@@ -27,7 +27,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         super.addInterceptors(registry);
         registry.addInterceptor(new CustomInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/user/*", "/hello", "/upload/*", "/member/*");
+                .excludePathPatterns("/user/*", "/hello", "/upload/*");
     }
 
     @Override

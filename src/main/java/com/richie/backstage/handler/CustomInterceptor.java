@@ -22,7 +22,7 @@ public class CustomInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
-        logger.debug("preHandler");
+        logger.info("preHandler");
         // 返回 true 不做拦截
         // get 请求不拦截
         if ("GET".equalsIgnoreCase(request.getMethod())) {
@@ -34,12 +34,12 @@ public class CustomInterceptor extends HandlerInterceptorAdapter {
             String token = cookie.getValue();
             logger.info("token:{}, url:{}", token, request.getRequestURL());
             if (Constant.NULL_TOKEN.equals(token) || !ApiUtils.checkLogin(token, request)) {
-                logger.debug("not login, redirect");
+                logger.info("not login, redirect");
                 response.sendRedirect("/login.html");
                 return false;
             }
         } else {
-            logger.debug("not login, redirect");
+            logger.info("not login, redirect");
             response.sendRedirect("/login.html");
             return false;
         }
@@ -48,11 +48,11 @@ public class CustomInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        logger.debug("postHandle: " + httpServletRequest.getRequestURL());
+        logger.info("postHandle: " + httpServletRequest.getRequestURL());
     }
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-        logger.debug("afterCompletion: " + httpServletRequest.getRequestURL());
+        logger.info("afterCompletion: " + httpServletRequest.getRequestURL());
     }
 }
