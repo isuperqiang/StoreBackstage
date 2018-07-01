@@ -42,3 +42,9 @@
 #### 系统预览
 
 <img src='screenshots/Jietu20180701-114145.jpg'/>
+
+<img src='screenshots/Jietu20180701-114232.jpg'/>
+
+<img src='screenshots/Jietu20180701-114256.jpg'/>
+
+<img src='screenshots/Jietu20180701-114320.jpg'/>
