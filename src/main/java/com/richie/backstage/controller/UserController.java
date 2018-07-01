@@ -99,7 +99,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/query_user")
+    @PostMapping(value = "/query")
     public Result queryUserInfo(@CookieValue(value = Constant.USER_TOKEN) String token, HttpServletRequest request) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);
         User user = userService.findUserById(userId);
