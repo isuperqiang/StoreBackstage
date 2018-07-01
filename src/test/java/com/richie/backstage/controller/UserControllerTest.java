@@ -73,21 +73,21 @@ public class UserControllerTest {
                 .andReturn();
     }
 
-    @Test
-    public void logout() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/logout")
-                .accept(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-    }
+    //@Test
+    //public void logout() throws Exception {
+    //    mockMvc.perform(MockMvcRequestBuilders.post("/user/logout")
+    //            .accept(MediaType.APPLICATION_JSON_UTF8))
+    //            .andExpect(MockMvcResultMatchers.status().isOk())
+    //            .andDo(MockMvcResultHandlers.print())
+    //            .andReturn();
+    //}
 
-    @Test
-    public void queryUserInfo() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/user/query")
-                .accept(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print())
-                .andReturn();
-    }
+    //@Test
+    //public void queryUserInfo() throws Exception {
+    //    mockMvc.perform(MockMvcRequestBuilders.post("/user/query")
+    //            .accept(MediaType.APPLICATION_JSON_UTF8))
+    //            .andExpect(MockMvcResultMatchers.status().isOk())
+    //            .andDo(MockMvcResultHandlers.print())
+    //            .andReturn();
+    //}
 }
