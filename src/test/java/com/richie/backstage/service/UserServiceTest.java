@@ -1,6 +1,7 @@
-package com.richie.backstage.service;
+package java.com.richie.backstage.service;
 
 import com.richie.backstage.domain.User;
+import com.richie.backstage.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

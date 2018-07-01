@@ -1,5 +1,6 @@
-package com.richie.backstage.dao;
+package java.com.richie.backstage.dao;
 
+import com.richie.backstage.dao.StoreMapper;
 import com.richie.backstage.domain.Store;
 import org.junit.Test;
 import org.junit.runner.RunWith;

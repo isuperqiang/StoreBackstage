@@ -1,5 +1,6 @@
-package com.richie.backstage.dao;
+package java.com.richie.backstage.dao;
 
+import com.richie.backstage.dao.UserMapper;
 import com.richie.backstage.domain.User;
 import com.richie.backstage.util.MD5Utils;
 import org.junit.Test;

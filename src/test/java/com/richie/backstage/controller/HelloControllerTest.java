@@ -1,4 +1,4 @@
-package com.richie.backstage.controller;
+package java.com.richie.backstage.controller;
 
 import org.junit.Before;
 import org.junit.Test;
