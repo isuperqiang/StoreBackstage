@@ -22,7 +22,6 @@ import java.util.Map;
  * 注册servlet和过滤器监控
  */
 @Configuration
-//@MapperScan(basePackages = {"com.richie.backstage.dao"})
 public class DruidConfig {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -81,7 +80,7 @@ public class DruidConfig {
     private String connectionProperties;
 
     @Bean
-    @Primary  //在同样的DataSource中，首先使用被标注的DataSource
+    @Primary
     public DataSource dataSource() {
         DruidDataSource datasource = new DruidDataSource();
 
