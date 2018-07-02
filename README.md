@@ -52,7 +52,7 @@
 
 <img src='screenshots/Jietu20180701-183215.jpg'/>
 
-<img src='screenshots/Jietu20180701-114145.jpg'/>
+<img src='screenshots/Jietu20180702-175641.jpg'/>
 
 <img src='screenshots/Jietu20180701-114232.jpg'/>
 
