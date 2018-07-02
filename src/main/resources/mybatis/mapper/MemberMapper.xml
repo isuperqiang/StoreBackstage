@@ -35,6 +35,12 @@
         limit #{page_size} offset #{page_index}
     </select>
 
+    <select id="queryMemberById" resultMap="memberResult">
+        select member_id, nickname, gender, phone, credit, order_count, card_no, date_format(created_at, '%Y-%m-%d %H:%m') as created_at
+        from member
+        where member_id = #{member_id}
+    </select>
+
     <select id="queryMemberCount" parameterType="int" resultType="int">
         select count(member_id)
         from member

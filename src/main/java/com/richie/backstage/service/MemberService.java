@@ -72,4 +72,8 @@ public class MemberService {
     public int queryMemberCount(int userId) {
         return memberMapper.queryMemberCount(userId);
     }
+
+    public Member queryMemberById(int id) {
+        return memberMapper.queryMemberById(id);
+    }
 }

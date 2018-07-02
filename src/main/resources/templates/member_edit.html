@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <title>商家管理后台</title>
+    <link rel="stylesheet" th:href="@{/static/res/layui/css/layui.css}" media="all"/>
+    <link rel="stylesheet" th:href="@{/static/css/user.css}"/>
+    <script type="text/javascript" th:src="@{/static/res/layui/layui.js}" charset="utf-8"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script th:src="@{/static/js/jquery.cookie.js}"></script>
+</head>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">商家后台管理系统</div>
+        <div class="div_center"><h2 class="nav_title">世纪华联</h2></div>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="javascript:;" onclick="logout()">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree">
+                <li class="layui-nav-item">
+                    <a href="goods_main.html">商品管理</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="category_main.html">分类管理</a>
+                </li>
+                <li class="layui-nav-item layui-this layui-nav-itemed">
+                    <a href="member_main.html">会员管理</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="store_edit.html">店铺设置</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body main_body">
+        <a href="member_main.html">
+            <i class="layui-icon" style="font-size: 24px">&#xe65c;</i>
+        </a>
+
+        <hr/>
+        <!-- 内容主体区域 -->
+        <h1>编辑会员</h1>
+        <hr/>
+        <div>
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="nickname" lay-verify="required" autocomplete="off"
+                               class="layui-input input_box" th:value="${member.nickname}"/>
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="hidden" name="memberId" th:value="${member.memberId}"/>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="gender" value="男" title="男" th:checked="${member.gender} == '男'">
+                        <input type="radio" name="gender" value="女" title="女" th:checked="${member.gender} == '女'">
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">手机号</label>
+                    <div class="layui-input-inline">
+                        <input type="number" name="phone" lay-verify="required" autocomplete="off"
+                               class="layui-input input_box" th:value="${member.phone}"/>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label">卡号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="cardNo" autocomplete="off" class="layui-input input_box"
+                               placeholder="选填"
+                               th:value="${member.cardNo}"/>
+                    </div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="confirm">确定</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        <div style="text-align: center">
+            <a href="https://isuperqiang.github.io" target="_blank">© 落英坠露</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    var name = $.cookie('store-name');
+    $('.nav_title').text(name);
+
+    layui.use('form', function () {
+        var form = layui.form;
+        //监听提交
+        form.on('submit(confirm)', function (data) {
+            var message = JSON.stringify(data.field);
+            console.log(message);
+
+            $.ajax({
+                type: "post",
+                url: "/member/update",
+                async: true, // 异步处理
+                dataType: "json", // 预期的服务器响应的数据类型。
+                data: message, // 	规定要发送到服务器的数据
+                contentType: 'application/json',
+                success: function (result) {
+                    console.log('update succeed: ' + result);
+                    if (result.status == 1) {
+                        layer.msg('修改成功', {icon: 6}, function () {
+                            // 跳转
+                            location.href = '/member_main.html';
+                        })
+                    } else {
+                        layer.msg(result.errorCode.message, {icon: 5})
+                    }
+                },
+                error: function () {
+                    layer.msg('请求失败', {icon: 5})
+                }
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+
+    });
+
+    layui.use('layer');
+
+    function logout() {
+        layer.confirm('确定退出登录？', function (index) {
+            $.ajax({
+                type: "post",
+                url: "/user/logout",
+                async: true, // 异步处理
+                dataType: "json", // 预期的服务器响应的数据类型。
+                data: JSON.stringify('{}'), // 	规定要发送到服务器的数据
+                contentType: 'application/json',
+                success: function (result) {
+                    console.log('logout succeed: ' + result);
+                    if (result.status == 1) {
+                        location.href = '/login.html';
+                    } else {
+                        layer.msg(result.errorCode.message, {icon: 5})
+                    }
+                },
+                error: function () {
+                    layer.msg('请求失败', {icon: 5})
+                }
+            });
+        });
+    }
+</script>
+
+</body>
+</html>
+

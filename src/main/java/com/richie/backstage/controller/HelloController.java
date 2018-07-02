@@ -46,4 +46,9 @@ public class HelloController {
         return "goods_new";
     }
 
+    @GetMapping("/member_new.html")
+    public String createMember() {
+        return "member_new";
+    }
+
 }

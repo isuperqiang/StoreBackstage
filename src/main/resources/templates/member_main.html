@@ -69,7 +69,6 @@
             <button id="btn_add" class="layui-btn">添加</button>
 
             <script type="text/html" id="member_operation">
-                <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
                 <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </script>
@@ -101,9 +100,9 @@
                 var checkStatus = table.checkStatus('render_members')
                     , data = checkStatus.data;
                 if (data.length == 0) {
-                    layer.msg('请选择分类');
+                    layer.msg('请选择会员');
                 } else {
-                    layer.confirm('确定删除该会员？', function (index) {
+                    layer.confirm('确定删除这些会员？', function () {
                         var da = JSON.stringify(data);
                         console.log('da' + da);
                         $.ajax({
@@ -114,7 +113,6 @@
                             data: da, // 	规定要发送到服务器的数据
                             contentType: 'application/json',
                             success: function () {
-                                layer.close(index);
                                 layer.msg('删除成功', {icon: 6});
                                 table.reload('render_members', {
                                     page: {
@@ -165,9 +163,7 @@
                     });
                 });
             } else if (obj.event === 'edit') {
-                layer.msg('暂未实现');
-            } else if (obj.event === 'detail') {
-                layer.msg('暂未实现');
+                location.href = '/member_edit?member_id=' + data.memberId;
             }
         });
 
@@ -217,7 +213,7 @@
 
         // 添加按钮
         $('#btn_add').on('click', function () {
-            layer.msg('暂未实现');
+            location.href = '/member_new.html';
         });
     });
 

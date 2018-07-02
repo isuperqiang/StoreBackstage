@@ -103,26 +103,28 @@
                 if (data.length == 0) {
                     layer.msg('请选择分类');
                 } else {
-                    var da = JSON.stringify(data);
-                    console.log('da' + da);
-                    $.ajax({
-                        type: "post",
-                        url: "/category/delete_bundle",
-                        async: true, // 异步处理
-                        dataType: "json", // 预期的服务器响应的数据类型。
-                        data: da, // 	规定要发送到服务器的数据
-                        contentType: 'application/json',
-                        success: function () {
-                            layer.msg('删除成功', {icon: 6});
-                            table.reload('render_cats', {
-                                page: {
-                                    curr: 1
-                                }
-                            });
-                        },
-                        error: function () {
-                            layer.msg('请求失败', {icon: 5})
-                        }
+                    layer.confirm('确定删除这些分类？', function () {
+                        var da = JSON.stringify(data);
+                        console.log('da' + da);
+                        $.ajax({
+                            type: "post",
+                            url: "/category/delete_bundle",
+                            async: true, // 异步处理
+                            dataType: "json", // 预期的服务器响应的数据类型。
+                            data: da, // 	规定要发送到服务器的数据
+                            contentType: 'application/json',
+                            success: function () {
+                                layer.msg('删除成功', {icon: 6});
+                                table.reload('render_cats', {
+                                    page: {
+                                        curr: 1
+                                    }
+                                });
+                            },
+                            error: function () {
+                                layer.msg('请求失败', {icon: 5})
+                            }
+                        });
                     });
                 }
             }

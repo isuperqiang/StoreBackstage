@@ -1,6 +1,5 @@
-package com.richie.backstage.handler;
+package com.richie.backstage.config;
 
-import com.richie.backstage.config.Constant;
 import com.richie.backstage.util.ApiUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

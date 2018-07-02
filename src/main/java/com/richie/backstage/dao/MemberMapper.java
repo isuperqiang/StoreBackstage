@@ -68,7 +68,7 @@ public interface MemberMapper {
      * @param memberId
      * @return
      */
-    Member queryById(@Param("member_id") int memberId);
+    Member queryMemberById(@Param("member_id") int memberId);
 
     /**
      * 查询会员数量

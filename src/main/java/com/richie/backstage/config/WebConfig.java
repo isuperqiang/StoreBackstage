@@ -1,6 +1,5 @@
 package com.richie.backstage.config;
 
-import com.richie.backstage.handler.CustomInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -27,7 +26,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         super.addInterceptors(registry);
         registry.addInterceptor(new CustomInterceptor())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/user/*", "/hello", "/upload/*");
+                .excludePathPatterns("/user/*", "/hello", "/upload/*", "/error/*");
     }
 
     @Override
@@ -40,6 +39,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/goods_edit.html").setViewName("goods_edit");
         registry.addViewController("/goods_new.html").setViewName("goods_new");
         registry.addViewController("/member_main.html").setViewName("member_main");
+        registry.addViewController("/member_new.html").setViewName("member_new");
     }
 
 }
