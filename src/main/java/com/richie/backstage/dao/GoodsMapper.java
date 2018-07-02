@@ -82,12 +82,31 @@ public interface GoodsMapper {
     List<Goods> queryGoodsByPage(@Param("name") String name, @Param("page_index") int pageIndex, @Param("page_size") int pageSize, @Param("user_id") int userId);
 
     /**
+     * 按状态查询
+     *
+     * @param sale
+     * @param pageIndex
+     * @param pageSize
+     * @param userId
+     * @return
+     */
+    List<Goods> queryGoodsByPageSale(@Param("sale") int sale, @Param("page_index") int pageIndex, @Param("page_size") int pageSize, @Param("user_id") int userId);
+
+    /**
      * 查询商品数量
      *
      * @param userId
      * @return
      */
     int queryCount(@Param("user_id") int userId);
+
+    /**
+     * 根据状态查询数量
+     *
+     * @param userId
+     * @return
+     */
+    int queryCountBySale(@Param("sale") int sale, @Param("user_id") int userId);
 
     /**
      * 更新商品的图片
@@ -98,4 +117,24 @@ public interface GoodsMapper {
      * @throws SQLException
      */
     int updateGoodsImage(@Param("goods_id") int goodsId, @Param("picture") String picture) throws SQLException;
+
+    /**
+     * 加库存
+     *
+     * @param goodsId
+     * @param stock
+     * @return
+     * @throws SQLException
+     */
+    int increaseStock(@Param("goods_id") int goodsId, @Param("stock") int stock) throws SQLException;
+
+    /**
+     * 上架和下架
+     *
+     * @param goodsId
+     * @param sale
+     * @return
+     * @throws SQLException
+     */
+    int changeSale(@Param("goods_id") int goodsId, @Param("sale") boolean sale) throws SQLException;
 }

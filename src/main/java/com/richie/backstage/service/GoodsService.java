@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -70,19 +69,27 @@ public class GoodsService {
     }
 
     //@Cacheable(value = "goodsByPage", key = "'goodsPage'")
-    public List<Goods> queryGoodsByPage(int pageIndex, int pageSize, String name, int userId) {
+    public List<Goods> queryGoodsByPage(int pageIndex, int pageSize, String name, int sale, int userId) {
         if (--pageIndex < 0) {
             pageIndex = 0;
         }
-        if (name == null) {
-            name = "";
+        if (sale == 0) {
+            if (name == null) {
+                name = "";
+            }
+            return goodsMapper.queryGoodsByPage(name, pageIndex * pageSize, pageSize, userId);
+        } else {
+            return goodsMapper.queryGoodsByPageSale(sale == 1 ? 1 : 0, pageIndex * pageSize, pageSize, userId);
         }
-        return goodsMapper.queryGoodsByPage(name, pageIndex * pageSize, pageSize, userId);
     }
 
-    @Cacheable(value = "queryCount", key = "'goods_count'")
-    public int queryCount(int userId) {
-        return goodsMapper.queryCount(userId);
+    //@Cacheable(value = "queryCount", key = "'goods_count'")
+    public int queryCount(int userId, int sale) {
+        if (sale == 0) {
+            return goodsMapper.queryCount(userId);
+        } else {
+            return goodsMapper.queryCountBySale(sale == 1 ? 1 : 0, userId);
+        }
     }
 
     public Goods queryGoodsById(int goodsId) {
@@ -96,6 +103,26 @@ public class GoodsService {
             return affected > 0;
         } catch (SQLException e) {
             logger.error("update goods failed", e);
+        }
+        return false;
+    }
+
+    public boolean increaseStock(int goodsId, int stock) {
+        try {
+            int i = goodsMapper.increaseStock(goodsId, stock);
+            return i > 0;
+        } catch (SQLException e) {
+            logger.error("increase stock failed", e);
+        }
+        return false;
+    }
+
+    public boolean changeSale(int goodsId, boolean onSale) {
+        try {
+            int i = goodsMapper.changeSale(goodsId, onSale);
+            return i > 0;
+        } catch (SQLException e) {
+            logger.error("change sale failed", e);
         }
         return false;
     }

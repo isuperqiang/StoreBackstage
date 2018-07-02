@@ -97,6 +97,8 @@ public class Result<T> {
         UPDATE_GOODS_FAILED(401, "更新商品失败"),
         DELETE_GOODS_FAILED(402, "删除商品失败"),
         QUERY_GOODS_FAILED(403, "查询不到商品"),
+        INCREASE_GOODS_FAILED(404, "加库存失败"),
+        CHANGE_SALE_GOODS_FAILED(405, "操作失败"),
 
         CREATE_MEMBER_FAILED(500, "创建会员失败"),
         UPDATE_MEMBER_FAILED(501, "更新会员失败"),

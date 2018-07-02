@@ -81,14 +81,14 @@ public class GoodsController {
     @PostMapping("/goods/query")
     @ResponseBody
     public ListResult queryGoodsByPage(@RequestParam("page_index") int pageIndex, @RequestParam("page_size") int pageSize,
-                                       @RequestParam(value = "name", required = false) String name,
+                                       @RequestParam(value = "name", required = false) String name, @RequestParam("sale") int sale,
                                        @CookieValue(Constant.USER_TOKEN) String token, HttpServletRequest request) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);
-        List<Goods> goods = goodsService.queryGoodsByPage(pageIndex, pageSize, name, userId);
+        List<Goods> goods = goodsService.queryGoodsByPage(pageIndex, pageSize, name, sale, userId);
         if (goods != null) {
             int count;
             if (StringUtils.isEmpty(name)) {
-                count = goodsService.queryCount(userId);
+                count = goodsService.queryCount(userId, sale);
             } else {
                 count = goods.size();
             }
@@ -119,6 +119,34 @@ public class GoodsController {
         ModelAndView modelAndView = new ModelAndView("goods_edit");
         modelAndView.addObject(new Goods());
         return modelAndView;
+    }
+
+    @PostMapping("/goods/increase_stock")
+    @ResponseBody
+    public Result increaseStock(@RequestBody List<Goods> goods) {
+        boolean ret = true;
+        for (Goods good : goods) {
+            ret &= goodsService.increaseStock(good.getGoodsId(), good.getStock());
+        }
+        if (ret) {
+            return Result.createYesResult();
+        } else {
+            return Result.createNoResult(Result.ErrorCode.INCREASE_GOODS_FAILED);
+        }
+    }
+
+    @PostMapping("/goods/on_sale")
+    @ResponseBody
+    public Result changeOnSale(@RequestBody List<Goods> goods) {
+        boolean ret = true;
+        for (Goods good : goods) {
+            ret &= goodsService.changeSale(good.getGoodsId(), good.isOnSale());
+        }
+        if (ret) {
+            return Result.createYesResult();
+        } else {
+            return Result.createNoResult(Result.ErrorCode.CHANGE_SALE_GOODS_FAILED);
+        }
     }
 
 }

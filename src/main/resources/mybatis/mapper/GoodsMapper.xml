@@ -59,9 +59,36 @@
         limit #{page_size} offset #{page_index}
     </select>
 
+    <select id="queryGoodsByPageSale" resultMap="goodsResult">
+        select g.goods_id, g.gname, g.picture, g.price, g.specification, g.cost, g.stock, g.sale_volume, g.on_sale, g.cat_id,
+        date_format(g.created_at, '%Y-%m-%d %H:%m') as created_at, c.name
+        from goods g, category c
+        where g.on_sale = #{sale} and g.user_id = #{user_id}
+        and g.cat_id = c.cat_id
+        order by created_at desc
+        limit #{page_size} offset #{page_index}
+    </select>
+
     <select id="queryCount" parameterType="int" resultType="int">
         select count(goods_id)
         from goods
         where user_id = #{user_id}
     </select>
+
+    <select id="queryCountBySale" parameterType="int" resultType="int">
+        select count(goods_id)
+        from goods
+        where user_id = #{user_id} and on_sale = #{sale}
+    </select>
+
+    <update id="increaseStock">
+        update goods set stock = #{stock} + stock
+        where goods_id = #{goods_id}
+    </update>
+
+    <update id="changeSale">
+        update goods set on_sale = #{sale}
+        where goods_id = #{goods_id}
+    </update>
+
 </mapper>
