@@ -49,6 +49,7 @@
         from store s, user u
         where s.user_id = #{user_id}
         and s.user_id = u.user_id
+        limit 1
     </select>
 
 </mapper>

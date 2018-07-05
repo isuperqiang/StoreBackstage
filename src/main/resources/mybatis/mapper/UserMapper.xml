@@ -23,6 +23,7 @@
         from user
         where phone = #{phone}
         and password = #{password}
+        limit 1
     </select>
 
     <update id="updateVisitTime">
@@ -35,10 +36,11 @@
         select username, phone, created_at, last_visit, user_id
         from user
         where user_id = #{user_id}
+        limit 1
     </select>
 
     <select id="findCountByPhone" parameterType="String" resultType="int">
-        select count(*)
+        select count(1)
         from user
         where phone = #{phone}
     </select>

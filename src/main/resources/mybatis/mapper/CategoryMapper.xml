@@ -8,16 +8,6 @@
         <result property="sequence" column="sequence"/>
         <result property="name" column="name"/>
         <result property="createdAt" column="created_at"/>
-        <!--嵌套结果查询-->
-        <!--一对一查询-->
-        <!--<association property="user" column="user_id" javaType="User">-->
-        <!--<id property="userId" column="user_id"/>-->
-        <!--<result property="username" column="username"/>-->
-        <!--<result property="password" column="password"/>-->
-        <!--<result property="lastVisit" column="last_visit"/>-->
-        <!--<result property="createdAt" column="created_at"/>-->
-        <!--<result property="phone" column="phone"/>-->
-        <!--</association>-->
     </resultMap>
 
     <insert id="createCategory">
@@ -41,11 +31,13 @@
     </select>
 
     <select id="queryMaxSeq" parameterType="int" resultType="Integer">
-        select max(sequence) from category where user_id = #{user_id}
+        select max(sequence)
+        from category
+        where user_id = #{user_id}
     </select>
 
     <select id="queryCatCount" parameterType="int" resultType="int">
-        select count(cat_id)
+        select count(1)
         from category
         where user_id = #{user_id}
     </select>
@@ -53,6 +45,7 @@
     <select id="queryCatIdByName" parameterType="String" resultType="Integer">
         select cat_id from category
         where name = #{name}
+        limit 1
     </select>
 
 </mapper>

@@ -39,12 +39,14 @@
         select member_id, nickname, gender, phone, credit, order_count, card_no, date_format(created_at, '%Y-%m-%d %H:%m') as created_at
         from member
         where member_id = #{member_id}
+        limit 1
     </select>
 
     <select id="queryMemberCount" parameterType="int" resultType="int">
-        select count(member_id)
+        select count(1)
         from member
         where user_id = #{user_id}
+        limit 1
     </select>
 
 </mapper>

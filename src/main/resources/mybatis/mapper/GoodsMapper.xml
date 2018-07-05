@@ -47,6 +47,7 @@
         from goods g, category c
         where g.goods_id = #{goods_id}
         and g.cat_id = c.cat_id
+        limit 1
     </select>
 
     <select id="queryGoodsByPage" resultMap="goodsResult">
@@ -70,13 +71,13 @@
     </select>
 
     <select id="queryCount" parameterType="int" resultType="int">
-        select count(goods_id)
+        select count(1)
         from goods
         where user_id = #{user_id}
     </select>
 
     <select id="queryCountBySale" parameterType="int" resultType="int">
-        select count(goods_id)
+        select count(1)
         from goods
         where user_id = #{user_id} and on_sale = #{sale}
     </select>
