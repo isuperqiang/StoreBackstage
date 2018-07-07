@@ -27,6 +27,7 @@
 - 数据库：MySQL
 - 数据库连接池：Druid
 - 缓存框架：Redis
+- 反向代理：nginx
 - 其他：Logback, spring-session 等
 
 **前端：**
