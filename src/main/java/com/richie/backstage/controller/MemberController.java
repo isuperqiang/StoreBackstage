@@ -2,6 +2,7 @@ package com.richie.backstage.controller;
 
 import com.richie.backstage.config.Constant;
 import com.richie.backstage.domain.Member;
+import com.richie.backstage.domain.User;
 import com.richie.backstage.handler.ListResult;
 import com.richie.backstage.handler.Result;
 import com.richie.backstage.service.MemberService;
@@ -36,7 +37,8 @@ public class MemberController {
     public Result createMember(@RequestBody Member member, @CookieValue(Constant.USER_TOKEN) String token,
                                HttpServletRequest request) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);
-        boolean ret = memberService.createMember(userId, member);
+        member.setUser(new User(userId));
+        boolean ret = memberService.createMember(member);
         if (ret) {
             return Result.createYesResult();
         } else {

@@ -23,6 +23,13 @@ public class User implements Serializable {
     // 上次访问时间
     private Date lastVisit;
 
+    public User() {
+    }
+
+    public User(int userId) {
+        this.userId = userId;
+    }
+
     public int getUserId() {
         return userId;
     }

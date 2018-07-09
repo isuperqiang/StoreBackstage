@@ -18,40 +18,20 @@ public interface GoodsMapper {
     /**
      * 创建商品
      *
-     * @param name
-     * @param specification
-     * @param price
-     * @param stock
-     * @param saleVolume
-     * @param cost
-     * @param userId
-     * @param catId
+     * @param goods
      * @return
      * @throws SQLException
      */
-    int createGoods(@Param("name") String name, @Param("specification") String specification,
-                    @Param("price") double price, @Param("stock") int stock, @Param("sale_volume") int saleVolume,
-                    @Param("cost") double cost, @Param("user_id") int userId, @Param("cat_id") int catId) throws SQLException;
+    int createGoods(@Param("goods") Goods goods) throws SQLException;
 
     /**
      * 更新商品
      *
-     * @param name
-     * @param specification
-     * @param price
-     * @param stock
-     * @param saleVolume
-     * @param cost
-     * @param onSale
-     * @param catId
-     * @param goodsId
+     * @param goods
      * @return
      * @throws SQLException
      */
-    int updateGoods(@Param("name") String name, @Param("specification") String specification,
-                    @Param("price") double price, @Param("stock") int stock, @Param("sale_volume") int saleVolume,
-                    @Param("cost") double cost, @Param("on_sale") boolean onSale, @Param("cat_id") int catId,
-                    @Param("goods_id") int goodsId) throws SQLException;
+    int updateGoods(@Param("goods") Goods goods) throws SQLException;
 
     /**
      * 删除商品
@@ -103,6 +83,7 @@ public interface GoodsMapper {
     /**
      * 根据状态查询数量
      *
+     * @param sale
      * @param userId
      * @return
      */

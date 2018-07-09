@@ -3,7 +3,6 @@
 <mapper namespace="com.richie.backstage.dao.CategoryMapper">
 
     <resultMap id="categoryResult" type="Category">
-        <!--property 对应 User 的成员变量，column 对应数据表的列名-->
         <id property="catId" column="cat_id"/>
         <result property="sequence" column="sequence"/>
         <result property="name" column="name"/>
@@ -11,11 +10,11 @@
     </resultMap>
 
     <insert id="createCategory">
-        insert into category (name, sequence, user_id) values (#{name}, #{sequence}, #{user_id})
+        insert into category (name, sequence, user_id) values (#{category.name}, #{category.sequence}, #{category.user.userId})
     </insert>
 
     <update id="updateCategory">
-        update category set name = #{name}, sequence = #{sequence} where cat_id = #{cat_id}
+        update category set name = #{category.name}, sequence = #{category.sequence} where cat_id = #{category.catId}
     </update>
 
     <delete id="deleteCategory" parameterType="int">

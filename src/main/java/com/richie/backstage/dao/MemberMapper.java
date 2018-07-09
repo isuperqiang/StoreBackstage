@@ -17,30 +17,20 @@ public interface MemberMapper {
     /**
      * 创建会员
      *
-     * @param userId
-     * @param nickname
-     * @param gender
-     * @param phone
-     * @param cardNo
+     * @param member
      * @return
      * @throws SQLException
      */
-    int createMember(@Param("user_id") int userId, @Param("nickname") String nickname, @Param("gender") String gender,
-                     @Param("phone") String phone, @Param("card_no") String cardNo) throws SQLException;
+    int createMember(@Param("member") Member member) throws SQLException;
 
     /**
      * 修改会员
      *
-     * @param memberId
-     * @param nickname
-     * @param gender
-     * @param phone
-     * @param cardNo
+     * @param member
      * @return
      * @throws SQLException
      */
-    int updateMember(@Param("member_id") int memberId, @Param("nickname") String nickname, @Param("gender") String gender,
-                     @Param("phone") String phone, @Param("card_no") String cardNo) throws SQLException;
+    int updateMember(@Param("member") Member member) throws SQLException;
 
     /**
      * 删除会员

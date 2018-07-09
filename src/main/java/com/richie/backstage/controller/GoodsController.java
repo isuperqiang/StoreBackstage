@@ -2,6 +2,7 @@ package com.richie.backstage.controller;
 
 import com.richie.backstage.config.Constant;
 import com.richie.backstage.domain.Goods;
+import com.richie.backstage.domain.User;
 import com.richie.backstage.handler.ListResult;
 import com.richie.backstage.handler.Result;
 import com.richie.backstage.service.GoodsService;
@@ -32,7 +33,8 @@ public class GoodsController {
     @ResponseBody
     public Result createGoods(@RequestBody Goods goods, @CookieValue(Constant.USER_TOKEN) String token, HttpServletRequest request) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);
-        boolean created = goodsService.createGoods(goods, userId);
+        goods.setUser(new User(userId));
+        boolean created = goodsService.createGoods(goods);
         if (created) {
             return Result.createYesResult();
         } else {

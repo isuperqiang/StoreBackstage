@@ -56,11 +56,7 @@ public class StoreController {
 
     @ResponseBody
     @PostMapping("/store/update")
-    public Result updateStore(@RequestBody Store store, @CookieValue(Constant.USER_TOKEN) String token,
-                              HttpServletRequest request, HttpServletResponse response) {
-        int userId = (int) WebUtils.getSessionAttribute(request, token);
-        logger.info("token:{}, userId:{}", token, userId);
-        store.setUser(userService.findUserById(userId));
+    public Result updateStore(@RequestBody Store store, HttpServletResponse response) {
         boolean ret = storeService.updateStore(store);
         if (ret) {
             Cookie cookie = new Cookie("store-name", store.getName());

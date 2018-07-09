@@ -25,14 +25,15 @@ public class CategoryService {
         this.categoryMapper = categoryMapper;
     }
 
-    @CacheEvict(value = "deleteCat", key = "'cat_count'")
-    public boolean createCategory(String name, int userId) {
-        Integer maxSeq = categoryMapper.queryMaxSeq(userId);
+    @CacheEvict(value = "createCat", key = "'cat_count'")
+    public boolean createCategory(Category category) {
+        Integer maxSeq = categoryMapper.queryMaxSeq(category.getUser().getUserId());
         if (maxSeq == null) {
             maxSeq = 0;
         }
         try {
-            int key = categoryMapper.createCategory(name, maxSeq + 1, userId);
+            category.setSequence(maxSeq);
+            int key = categoryMapper.createCategory(category);
             return key > 0;
         } catch (SQLException e) {
             logger.error("create cat failed", e);
@@ -40,10 +41,10 @@ public class CategoryService {
         return false;
     }
 
-    @CacheEvict(value = "deleteCat", key = "'cat_count'")
+    @CacheEvict(value = "updateCat", key = "'cat_count'")
     public boolean updateCategory(Category category) {
         try {
-            int affected = categoryMapper.updateCategory(category.getName(), category.getSequence(), category.getCatId());
+            int affected = categoryMapper.updateCategory(category);
             return affected > 0;
         } catch (SQLException e) {
             logger.error("update cat failed", e);

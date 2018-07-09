@@ -17,42 +17,20 @@ public interface StoreMapper {
     /**
      * 创建店铺
      *
-     * @param name
-     * @param logo
-     * @param address
-     * @param category
-     * @param description
-     * @param phone
-     * @param avgPrice
-     * @param saleFrom
-     * @param saleTo
-     * @param userId
-     * @return primary key
+     * @param store
+     * @return affected rows
      * @throws SQLException
      */
-    int createStore(@Param("name") String name, @Param("logo") String logo, @Param("address") String address,
-                    @Param("category") String category, @Param("description") String description, @Param("phone") String phone,
-                    @Param("avg_price") String avgPrice, @Param("sale_from") String saleFrom, @Param("sale_to") String saleTo,
-                    @Param("user_id") int userId) throws SQLException;
+    int createStore(@Param("store") Store store) throws SQLException;
 
     /**
      * 更新店铺
      *
-     * @param name
-     * @param address
-     * @param category
-     * @param description
-     * @param phone
-     * @param avgPrice
-     * @param saleFrom
-     * @param saleTo
-     * @param userId
+     * @param store
      * @return affected rows
      * @throws SQLException
      */
-    int updateStore(@Param("name") String name, @Param("address") String address, @Param("category") String category,
-                    @Param("description") String description, @Param("phone") String phone, @Param("avg_price") String avgPrice,
-                    @Param("sale_from") String saleFrom, @Param("sale_to") String saleTo, @Param("user_id") int userId) throws SQLException;
+    int updateStore(@Param("store") Store store) throws SQLException;
 
     /**
      * 查询店铺

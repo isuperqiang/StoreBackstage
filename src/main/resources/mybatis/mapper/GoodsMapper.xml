@@ -3,7 +3,6 @@
 <mapper namespace="com.richie.backstage.dao.GoodsMapper">
 
     <resultMap id="goodsResult" type="Goods">
-        <!--property 对应 User 的成员变量，column 对应数据表的列名-->
         <id property="goodsId" column="goods_id"/>
         <result property="gname" column="gname"/>
         <result property="createdAt" column="created_at"/>
@@ -22,14 +21,16 @@
         </association>
     </resultMap>
 
-    <insert id="createGoods">
+    <insert id="createGoods" parameterType="Goods">
         insert into goods (gname, specification, price, cost, stock, sale_volume, user_id, cat_id)
-        values (#{name}, #{specification}, #{price}, #{cost}, #{stock}, #{sale_volume}, #{user_id}, #{cat_id})
+        values (#{goods.gname}, #{goods.specification}, #{goods.price}, #{goods.cost}, #{goods.stock}, #{goods.saleVolume},
+         #{goods.user.userId}, #{goods.category.catId})
     </insert>
 
-    <update id="updateGoods">
-        update goods set gname = #{name}, specification = #{specification}, price = #{price}, cost = #{cost},
-        stock = #{stock}, sale_volume = #{sale_volume}, on_sale = #{on_sale}, cat_id = #{cat_id} where goods_id = #{goods_id}
+    <update id="updateGoods" parameterType="Goods">
+        update goods set gname = #{goods.gname}, specification = #{goods.specification}, price = #{goods.price}, cost = #{goods.cost},
+        stock = #{goods.stock}, sale_volume = #{goods.saleVolume}, on_sale = #{goods.onSale}, cat_id = #{goods.category.catId}
+        where goods_id = #{goods.goodsId}
     </update>
 
     <update id="updateGoodsImage">
@@ -41,9 +42,13 @@
         delete from goods where goods_id = #{goods_id}
     </delete>
 
-    <select id="queryGoodsById" parameterType="int" resultMap="goodsResult">
-        select g.goods_id, g.gname, g.picture, g.price, g.specification, g.cost, g.stock, g.sale_volume, g.on_sale, g.cat_id,
+    <sql id="queryColumns">g.goods_id, g.gname, g.picture, g.price, g.specification, g.cost, g.stock, g.sale_volume, g.on_sale, g.cat_id,
         date_format(g.created_at, '%Y-%m-%d %H:%m') as created_at, c.name
+    </sql>
+
+    <select id="queryGoodsById" parameterType="int" resultMap="goodsResult">
+        select
+        <include refid="queryColumns"/>
         from goods g, category c
         where g.goods_id = #{goods_id}
         and g.cat_id = c.cat_id
@@ -51,8 +56,8 @@
     </select>
 
     <select id="queryGoodsByPage" resultMap="goodsResult">
-        select g.goods_id, g.gname, g.picture, g.price, g.specification, g.cost, g.stock, g.sale_volume, g.on_sale, g.cat_id,
-        date_format(g.created_at, '%Y-%m-%d %H:%m') as created_at, c.name
+        select
+        <include refid="queryColumns"/>
         from goods g, category c
         where g.gname like '%${name}%' and g.user_id = #{user_id}
         and g.cat_id = c.cat_id
@@ -61,8 +66,8 @@
     </select>
 
     <select id="queryGoodsByPageSale" resultMap="goodsResult">
-        select g.goods_id, g.gname, g.picture, g.price, g.specification, g.cost, g.stock, g.sale_volume, g.on_sale, g.cat_id,
-        date_format(g.created_at, '%Y-%m-%d %H:%m') as created_at, c.name
+        select
+        <include refid="queryColumns"/>
         from goods g, category c
         where g.on_sale = #{sale} and g.user_id = #{user_id}
         and g.cat_id = c.cat_id

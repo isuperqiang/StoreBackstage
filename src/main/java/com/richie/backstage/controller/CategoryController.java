@@ -2,6 +2,7 @@ package com.richie.backstage.controller;
 
 import com.richie.backstage.config.Constant;
 import com.richie.backstage.domain.Category;
+import com.richie.backstage.domain.User;
 import com.richie.backstage.handler.ListResult;
 import com.richie.backstage.handler.Result;
 import com.richie.backstage.service.CategoryService;
@@ -35,7 +36,8 @@ public class CategoryController {
     public Result createCategory(@CookieValue(Constant.USER_TOKEN) String token, @RequestBody Category category,
                                  HttpServletRequest request) {
         int userId = (int) WebUtils.getSessionAttribute(request, token);
-        boolean created = categoryService.createCategory(category.getName(), userId);
+        category.setUser(new User(userId));
+        boolean created = categoryService.createCategory(category);
         if (created) {
             return Result.createYesResult();
         } else {

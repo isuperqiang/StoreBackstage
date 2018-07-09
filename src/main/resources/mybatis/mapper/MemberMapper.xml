@@ -3,7 +3,6 @@
 <mapper namespace="com.richie.backstage.dao.MemberMapper">
 
     <resultMap id="memberResult" type="Member">
-        <!--property 对应 User 的成员变量，column 对应数据表的列名-->
         <id property="memberId" column="member_id"/>
         <result property="nickname" column="nickname"/>
         <result property="phone" column="phone"/>
@@ -16,27 +15,33 @@
 
     <insert id="createMember">
         insert into member (nickname, phone, gender, card_no, user_id)
-        values (#{nickname}, #{phone}, #{gender}, #{card_no}, #{user_id})
+        values (#{member.nickname}, #{member.phone}, #{member.gender}, #{member.cardNo}, #{member.user.userId})
     </insert>
 
     <update id="updateMember">
-        update member set nickname = #{nickname}, phone = #{phone}, gender = #{gender}, card_no = #{card_no}
-        where member_id = #{member_id}
+        update member set nickname = #{member.nickname}, phone = #{member.phone}, gender = #{member.gender}, card_no = #{member.cardNo}
+        where member_id = #{member.memberId}
     </update>
 
     <delete id="deleteMember" parameterType="int">
         delete from member where member_id = #{member_id}
     </delete>
 
+    <sql id="queryColumns">member_id, nickname, gender, phone, credit, order_count, card_no, date_format(created_at, '%Y-%m-%d %H:%m')</sql>
+
     <select id="queryMemberByPage" resultMap="memberResult">
-        select member_id, nickname, gender, phone, credit, order_count, card_no, date_format(created_at, '%Y-%m-%d %H:%m') as created_at
+        select
+        <include refid="queryColumns"/>
+        as created_at
         from member
         where nickname like '%${nickname}%' and user_id = #{user_id}
         limit #{page_size} offset #{page_index}
     </select>
 
     <select id="queryMemberById" resultMap="memberResult">
-        select member_id, nickname, gender, phone, credit, order_count, card_no, date_format(created_at, '%Y-%m-%d %H:%m') as created_at
+        select
+        <include refid="queryColumns"/>
+        as created_at
         from member
         where member_id = #{member_id}
         limit 1

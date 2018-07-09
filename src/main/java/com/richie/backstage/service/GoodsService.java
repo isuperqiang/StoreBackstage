@@ -2,6 +2,7 @@ package com.richie.backstage.service;
 
 import com.richie.backstage.dao.CategoryMapper;
 import com.richie.backstage.dao.GoodsMapper;
+import com.richie.backstage.domain.Category;
 import com.richie.backstage.domain.Goods;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,12 +32,12 @@ public class GoodsService {
         this.goodsMapper = goodsMapper;
     }
 
-    @CacheEvict(value = "deleteGoods", key = "'goods_count'")
-    public boolean createGoods(Goods goods, int userId) {
+    @CacheEvict(value = "createGoods", key = "'goods_count'")
+    public boolean createGoods(Goods goods) {
         int catId = categoryMapper.queryCatIdByName(goods.getCategory().getName());
+        goods.setCategory(new Category(catId));
         try {
-            int key = goodsMapper.createGoods(goods.getGname(), goods.getSpecification(), goods.getPrice(), goods.getStock(),
-                    goods.getSaleVolume(), goods.getCost(), userId, catId);
+            int key = goodsMapper.createGoods(goods);
             return key > 0;
         } catch (SQLException e) {
             logger.error("create goods failed", e);
@@ -44,12 +45,12 @@ public class GoodsService {
         return false;
     }
 
-    @CacheEvict(value = "deleteGoods", key = "'goods_count'")
+    @CacheEvict(value = "updateGoods", key = "'goods_count'")
     public boolean updateGoods(Goods goods) {
         int catId = categoryMapper.queryCatIdByName(goods.getCategory().getName());
+        goods.setCategory(new Category(catId));
         try {
-            int affected = goodsMapper.updateGoods(goods.getGname(), goods.getSpecification(), goods.getPrice(), goods.getStock(),
-                    goods.getSaleVolume(), goods.getCost(), goods.isOnSale(), catId, goods.getGoodsId());
+            int affected = goodsMapper.updateGoods(goods);
             return affected > 0;
         } catch (SQLException e) {
             logger.error("update goods failed", e);
@@ -96,7 +97,7 @@ public class GoodsService {
         return goodsMapper.queryGoodsById(goodsId);
     }
 
-    @CacheEvict(value = "deleteGoods", key = "'goods_count'")
+    @CacheEvict(value = "updateGoodsPicture", key = "'goods_count'")
     public boolean updateGoodsPicture(int goodsId, String picture) {
         try {
             int affected = goodsMapper.updateGoodsImage(goodsId, picture);

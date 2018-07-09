@@ -17,24 +17,20 @@ public interface CategoryMapper {
     /**
      * 创建分类
      *
-     * @param name
-     * @param seq
-     * @param userId
-     * @return primary key
+     * @param category
+     * @return affected rows
      * @throws SQLException
      */
-    int createCategory(@Param("name") String name, @Param("sequence") int seq, @Param("user_id") int userId) throws SQLException;
+    int createCategory(@Param("category") Category category) throws SQLException;
 
     /**
      * 更新分类
      *
-     * @param name
-     * @param seq
-     * @param catId
+     * @param category
      * @return affected rows
      * @throws SQLException
      */
-    int updateCategory(@Param("name") String name, @Param("sequence") int seq, @Param("cat_id") int catId) throws SQLException;
+    int updateCategory(@Param("category") Category category) throws SQLException;
 
     /**
      * 删除分类

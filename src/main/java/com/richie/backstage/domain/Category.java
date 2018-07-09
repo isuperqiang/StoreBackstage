@@ -20,6 +20,12 @@ public class Category implements Serializable {
     // 店家
     private User user;
 
+    public Category() {
+    }
+
+    public Category(int catId) {
+        this.catId = catId;
+    }
 
     public int getCatId() {
         return catId;

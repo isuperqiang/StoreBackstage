@@ -25,22 +25,22 @@ public class MemberService {
         this.memberMapper = memberMapper;
     }
 
-    @CacheEvict(value = "deleteMember", key = "'member_count'")
-    public boolean createMember(int userId, Member member) {
+    @CacheEvict(value = "createMember", key = "'member_count'")
+    public boolean createMember(Member member) {
         int key = 0;
         try {
-            key = memberMapper.createMember(userId, member.getNickname(), member.getGender(), member.getPhone(), member.getCardNo());
+            key = memberMapper.createMember(member);
         } catch (SQLException e) {
             logger.error("create member failed", e);
         }
         return key > 0;
     }
 
-    @CacheEvict(value = "deleteMember", key = "'member_count'")
+    @CacheEvict(value = "updateMember", key = "'member_count'")
     public boolean updateMember(Member member) {
         int key = 0;
         try {
-            key = memberMapper.updateMember(member.getMemberId(), member.getNickname(), member.getGender(), member.getPhone(), member.getCardNo());
+            key = memberMapper.updateMember(member);
         } catch (SQLException e) {
             logger.error("create member failed", e);
         }

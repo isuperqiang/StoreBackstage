@@ -1,6 +1,7 @@
 package com.richie.backstage.dao;
 
 import com.richie.backstage.domain.Store;
+import com.richie.backstage.domain.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,37 @@ public class StoreMapperTest {
     }
 
     @Test
-    public void createStore() {
+    @Transactional
+    public void createStore() throws SQLException {
+        Store store = new Store();
+        store.setAddress("123");
+        store.setAvgPrice("3");
+        store.setCategory("电脑");
+        store.setUser(new User(1));
+        store.setDescription("ffff");
+        store.setSaleFrom("1");
+        store.setSaleTo("2");
+        store.setPhone("132323");
+        store.setName("fff");
+        int i = storeMapper.createStore(store);
+        assertThat(i, greaterThan(1));
     }
 
     @Test
-    public void updateStore() {
+    @Transactional
+    public void updateStore() throws SQLException {
+        Store store = new Store();
+        store.setAddress("123");
+        store.setAvgPrice("3");
+        store.setCategory("电脑");
+        store.setStoreId(4);
+        store.setDescription("ffff");
+        store.setSaleFrom("1");
+        store.setSaleTo("2");
+        store.setPhone("132323");
+        store.setName("fff");
+        int i = storeMapper.updateStore(store);
+        assertThat(i, greaterThan(0));
     }
 
     @Test

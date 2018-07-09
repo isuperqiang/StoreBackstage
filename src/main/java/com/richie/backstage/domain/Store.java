@@ -14,7 +14,7 @@ public class Store implements Serializable {
     // 名称
     private String name;
     // logo
-    private String logo = "";
+    private String logo;
     // 地址
     private String address;
     // 类目
