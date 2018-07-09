@@ -5,7 +5,7 @@
 项目使用主流的 SSM 框架，为的是快速开发。数据库使用 MySQL，数据缓存采用 Redis，支持基本的增删改查。
 前端框架使用 layui，它小巧却强大，适合开发后台界面。
 
-体验地址：<a href='http://47.98.173.179/login.html' target='_blank'>http://47.98.173.179/login.html</a>
+体验地址：http://47.98.173.179/login.html
 
 ---
 
