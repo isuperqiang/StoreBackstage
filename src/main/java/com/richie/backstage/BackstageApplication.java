@@ -8,6 +8,7 @@ import org.springframework.web.WebApplicationInitializer;
 
 /**
  * @author richie on 2018.06.25
+ * 入口方法
  */
 @SpringBootApplication
 public class BackstageApplication extends SpringBootServletInitializer implements WebApplicationInitializer {

@@ -1,6 +1,6 @@
 package com.richie.backstage.controller;
 
-import com.richie.backstage.handler.Result;
+import com.richie.backstage.response.Result;
 import com.richie.backstage.service.GoodsService;
 import com.richie.backstage.service.StoreService;
 import com.richie.backstage.util.ApiUtils;

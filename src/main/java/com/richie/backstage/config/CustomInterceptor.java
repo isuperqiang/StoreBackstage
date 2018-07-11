@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * 执行顺序：pre --> post --> complete
  */
 public class CustomInterceptor extends HandlerInterceptorAdapter {
+    private static final String LOGIN_HTML = "/login.html";
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
@@ -34,12 +35,12 @@ public class CustomInterceptor extends HandlerInterceptorAdapter {
             logger.info("token:{}, url:{}", token, request.getRequestURL());
             if (Constant.NULL_TOKEN.equals(token) || !ApiUtils.checkLogin(token, request)) {
                 logger.info("not login, redirect");
-                response.sendRedirect("/login.html");
+                response.sendRedirect(LOGIN_HTML);
                 return false;
             }
         } else {
+            response.sendRedirect(LOGIN_HTML);
             logger.info("not login, redirect");
-            response.sendRedirect("/login.html");
             return false;
         }
         return true;

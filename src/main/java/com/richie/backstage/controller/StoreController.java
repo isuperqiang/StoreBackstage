@@ -3,7 +3,7 @@ package com.richie.backstage.controller;
 import com.richie.backstage.config.Constant;
 import com.richie.backstage.domain.Store;
 import com.richie.backstage.domain.User;
-import com.richie.backstage.handler.Result;
+import com.richie.backstage.response.Result;
 import com.richie.backstage.service.StoreService;
 import com.richie.backstage.service.UserService;
 import org.slf4j.Logger;
